@@ -1,0 +1,28 @@
+<!doctype html><meta charset="utf-8"><title>Bench app tests</title>
+<body style="font:14px ui-monospace,monospace;padding:20px;background:#111;color:#eee;margin:0">
+<pre id="o">loading app…</pre>
+<p style="color:#8b939e">
+  Testing: <b id="which"></b> —
+  <a href="?src=../dev.html" style="color:#7C9CFF">dev</a> ·
+  <a href="?src=../dist/bench-data-skills.html" style="color:#7C9CFF">built</a>
+</p>
+<iframe id="app" style="width:1280px;height:860px;border:1px solid #333"></iframe>
+<script src="app.test.js"></script>
+<script>
+  // Default to the dev entry; ?src= lets the same suite run against dist/,
+  // which is the artifact that actually ships.
+  const src = new URLSearchParams(location.search).get('src') || '../dev.html';
+  document.getElementById('which').textContent = src;
+  const f = document.getElementById('app');
+  f.addEventListener('load', async () => {
+    await new Promise(r => setTimeout(r, 900));   // welcome ticker settles
+    let r;
+    try { r = await runAppTests(f.contentWindow); }
+    catch(e){ document.getElementById('o').textContent = 'RUNNER ERROR: ' + e.message + '\n' + e.stack; return; }
+    window.__app = r;
+    document.getElementById('o').textContent =
+      `${r.passed}/${r.total} passed  (${src})\n\n` +
+      (r.failed.length ? r.failed.map(x => `FAIL  ${x.name}\n      ${x.err}`).join('\n\n') : 'all green');
+  });
+  f.src = src;
+</script>

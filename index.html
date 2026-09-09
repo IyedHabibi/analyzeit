@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirecting — AnalyzeIt</title>
+
+  <!-- Why this file exists: the server root used to show a bare directory
+       listing, which reads as "the app is broken" when it is really just the
+       wrong URL. This sends people to the built app and links the other
+       entry points for anyone who lands here with JS off or hits Back.
+
+       Two redirects on purpose. The meta refresh works without JavaScript;
+       location.replace() runs first when JS is on and is the only one of the
+       two GUARANTEED not to push a history entry. Without that guarantee the
+       Back button can trap you: leave the app, land here, get pushed forward
+       again, repeat. -->
+  <meta http-equiv="refresh" content="0; url=dist/bench-data-skills.html">
+  <script>location.replace('dist/bench-data-skills.html');</script>
+
+  <style>
+    :root {
+      --bg: #0D1015;
+      --text: #E8EAEE;
+      --muted: #8B939E;
+      --accent: #7C9CFF;
+    }
+
+    body {
+      margin: 0;
+      /* dvh, not vh: on mobile Safari the toolbar makes the visual viewport
+         shorter than 100vh, so the card sits off-centre and the page scrolls
+         when it should not. Same bug the redesign audit flagged app-wide. */
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .card {
+      text-align: center;
+      padding: 32px 24px;
+      max-width: 400px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      margin: 0 0 6px;
+    }
+
+    p {
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    a {
+      display: block;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+
+    a:hover {
+      background: rgba(124, 156, 255, 0.1);
+      text-decoration: underline;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    code {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      a { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>AnalyzeIt</h1>
+    <p>Opening the app…</p>
+    <nav class="nav-links">
+      <a href="dist/bench-data-skills.html">The app <code>— dist/bench-data-skills.html</code></a>
+      <a href="dev.html">Dev build <code>— modules loaded separately</code></a>
+      <a href="tests/index.html">Tests <code>— all three suites</code></a>
+    </nav>
+  </main>
+</body>
+</html>

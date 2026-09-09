@@ -1,0 +1,16 @@
+# Derived image sizes. Regenerate with: python tools/make-logo.py
+# The two .webp files and logo-favicon.png ARE committed — the build
+# inlines them, so a fresh clone must be able to run tools/build.py.
+assets/*-source.jpg
+assets/logo-1024.png
+assets/logo-512.png
+assets/logo-256.png
+assets/logo-128.png
+assets/logo-card.jpg
+
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+assets/logo-mark-256.png
+assets/logo-mark-256-light.png

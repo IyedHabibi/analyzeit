@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>Bench content tests</title>
+<body style="font:14px ui-monospace,monospace;padding:20px;background:#111;color:#eee">
+<pre id="o">running…</pre>
+<script src="../src/keep-data.js"></script>
+<script src="../src/keep-lessons.js"></script>
+<script src="../src/exercises.js"></script>
+<script src="../src/git-lessons.js"></script>
+<script src="../src/git-engine.js"></script>
+<script src="content.test.js"></script>
+<script>
+  const r = runContentTests();
+  document.getElementById('o').textContent =
+    `${r.passed}/${r.total} passed\n\n` +
+    (r.failed.length ? r.failed.map(f => `FAIL  ${f.name}\n      ${f.err}`).join('\n\n') : 'all green');
+</script>

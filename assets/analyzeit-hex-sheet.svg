@@ -1,0 +1,281 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 540" width="1100" height="540" role="img" aria-label="AnalyzeIt hexagon mark">
+<rect width="1100" height="540" fill="#F7F6F3"/>
+<text x="40" y="52" font-family="Georgia, serif" font-size="29" fill="#111111">Your mark, redrawn as vector</text>
+<text x="40" y="78" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#6E6C68">Structure kept, material dropped. One path set, inherits colour, holds at any size.</text>
+<path d="M40 100 H1060" stroke="#E4E3DF" stroke-width="1"/>
+<g color="#5B2422"><g transform="translate(55,125) scale(1.05)">
+  
+  
+
+  <!-- network first: the lines pass behind the letter, as in the original -->
+  <g fill="none" stroke="currentColor">
+    <polygon points="100.00,16.00 172.75,58.00 172.75,142.00 100.00,184.00 27.25,142.00 27.25,58.00" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="round"/>
+    <polyline points="27.30,100.00 62.00,80.00 100.00,96.00 140.00,78.00 172.70,100.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62.00 80.00 L56.00 132.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M140.00 78.00 L148.00 120.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="100.00" cy="16.00" r="11.00"/>
+    <circle cx="172.75" cy="58.00" r="8.50"/>
+    <circle cx="172.75" cy="142.00" r="8.50"/>
+    <circle cx="100.00" cy="184.00" r="8.50"/>
+    <circle cx="27.25" cy="142.00" r="8.50"/>
+    <circle cx="27.25" cy="58.00" r="8.50"/>
+    <circle cx="27.30" cy="100.00" r="7.00"/>
+    <circle cx="62.00" cy="80.00" r="7.40"/>
+    <circle cx="140.00" cy="78.00" r="7.40"/>
+    <circle cx="172.70" cy="100.00" r="7.00"/>
+    <circle cx="56.00" cy="132.00" r="6.20"/>
+    <circle cx="148.00" cy="120.00" r="6.20"/>
+  </g>
+
+  <g>
+    <polygon points="100.00,44.00 142.00,130.00 58.00,130.00" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="miter"/>
+    <polygon points="100.00,56.00 113.00,56.00 88.00,124.00 68.00,124.00" fill="currentColor"/>
+    <path d="M74 110 H126" stroke="currentColor" stroke-width="5" stroke-linecap="butt"/>
+  </g>
+
+  <g>
+    <polygon points="87.00,144.00 100.00,134.00 113.00,144.00 100.00,154.00" fill="currentColor"/>
+    <path d="M87.0 158.0 L100.0 166.0 L113.0 158.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M87.0 168.0 L100.0 176.0 L113.0 168.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+</g></g>
+<g color="#111111"><g transform="translate(320,150) scale(0.5)">
+  
+  
+
+  <!-- network first: the lines pass behind the letter, as in the original -->
+  <g fill="none" stroke="currentColor">
+    <polygon points="100.00,16.00 172.75,58.00 172.75,142.00 100.00,184.00 27.25,142.00 27.25,58.00" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="round"/>
+    <polyline points="27.30,100.00 62.00,80.00 100.00,96.00 140.00,78.00 172.70,100.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62.00 80.00 L56.00 132.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M140.00 78.00 L148.00 120.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="100.00" cy="16.00" r="11.00"/>
+    <circle cx="172.75" cy="58.00" r="8.50"/>
+    <circle cx="172.75" cy="142.00" r="8.50"/>
+    <circle cx="100.00" cy="184.00" r="8.50"/>
+    <circle cx="27.25" cy="142.00" r="8.50"/>
+    <circle cx="27.25" cy="58.00" r="8.50"/>
+    <circle cx="27.30" cy="100.00" r="7.00"/>
+    <circle cx="62.00" cy="80.00" r="7.40"/>
+    <circle cx="140.00" cy="78.00" r="7.40"/>
+    <circle cx="172.70" cy="100.00" r="7.00"/>
+    <circle cx="56.00" cy="132.00" r="6.20"/>
+    <circle cx="148.00" cy="120.00" r="6.20"/>
+  </g>
+
+  <g>
+    <polygon points="100.00,44.00 142.00,130.00 58.00,130.00" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="miter"/>
+    <polygon points="100.00,56.00 113.00,56.00 88.00,124.00 68.00,124.00" fill="currentColor"/>
+    <path d="M74 110 H126" stroke="currentColor" stroke-width="5" stroke-linecap="butt"/>
+  </g>
+
+  <g>
+    <polygon points="87.00,144.00 100.00,134.00 113.00,144.00 100.00,154.00" fill="currentColor"/>
+    <path d="M87.0 158.0 L100.0 166.0 L113.0 158.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M87.0 168.0 L100.0 176.0 L113.0 168.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+</g></g>
+<text x="370" y="290" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6E6C68">100 px</text>
+<g color="#111111"><g transform="translate(450,170) scale(0.3)">
+  
+  
+
+  <!-- network first: the lines pass behind the letter, as in the original -->
+  <g fill="none" stroke="currentColor">
+    <polygon points="100.00,16.00 172.75,58.00 172.75,142.00 100.00,184.00 27.25,142.00 27.25,58.00" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="round"/>
+    <polyline points="27.30,100.00 62.00,80.00 100.00,96.00 140.00,78.00 172.70,100.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62.00 80.00 L56.00 132.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M140.00 78.00 L148.00 120.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="100.00" cy="16.00" r="11.00"/>
+    <circle cx="172.75" cy="58.00" r="8.50"/>
+    <circle cx="172.75" cy="142.00" r="8.50"/>
+    <circle cx="100.00" cy="184.00" r="8.50"/>
+    <circle cx="27.25" cy="142.00" r="8.50"/>
+    <circle cx="27.25" cy="58.00" r="8.50"/>
+    <circle cx="27.30" cy="100.00" r="7.00"/>
+    <circle cx="62.00" cy="80.00" r="7.40"/>
+    <circle cx="140.00" cy="78.00" r="7.40"/>
+    <circle cx="172.70" cy="100.00" r="7.00"/>
+    <circle cx="56.00" cy="132.00" r="6.20"/>
+    <circle cx="148.00" cy="120.00" r="6.20"/>
+  </g>
+
+  <g>
+    <polygon points="100.00,44.00 142.00,130.00 58.00,130.00" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="miter"/>
+    <polygon points="100.00,56.00 113.00,56.00 88.00,124.00 68.00,124.00" fill="currentColor"/>
+    <path d="M74 110 H126" stroke="currentColor" stroke-width="5" stroke-linecap="butt"/>
+  </g>
+
+  <g>
+    <polygon points="87.00,144.00 100.00,134.00 113.00,144.00 100.00,154.00" fill="currentColor"/>
+    <path d="M87.0 158.0 L100.0 166.0 L113.0 158.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M87.0 168.0 L100.0 176.0 L113.0 168.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+</g></g>
+<text x="480" y="290" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6E6C68">60 px</text>
+<g color="#111111"><g transform="translate(545,186) scale(0.16)">
+  
+  
+
+  <!-- network first: the lines pass behind the letter, as in the original -->
+  <g fill="none" stroke="currentColor">
+    <polygon points="100.00,16.00 172.75,58.00 172.75,142.00 100.00,184.00 27.25,142.00 27.25,58.00" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="round"/>
+    <polyline points="27.30,100.00 62.00,80.00 100.00,96.00 140.00,78.00 172.70,100.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62.00 80.00 L56.00 132.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M140.00 78.00 L148.00 120.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="100.00" cy="16.00" r="11.00"/>
+    <circle cx="172.75" cy="58.00" r="8.50"/>
+    <circle cx="172.75" cy="142.00" r="8.50"/>
+    <circle cx="100.00" cy="184.00" r="8.50"/>
+    <circle cx="27.25" cy="142.00" r="8.50"/>
+    <circle cx="27.25" cy="58.00" r="8.50"/>
+    <circle cx="27.30" cy="100.00" r="7.00"/>
+    <circle cx="62.00" cy="80.00" r="7.40"/>
+    <circle cx="140.00" cy="78.00" r="7.40"/>
+    <circle cx="172.70" cy="100.00" r="7.00"/>
+    <circle cx="56.00" cy="132.00" r="6.20"/>
+    <circle cx="148.00" cy="120.00" r="6.20"/>
+  </g>
+
+  <g>
+    <polygon points="100.00,44.00 142.00,130.00 58.00,130.00" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="miter"/>
+    <polygon points="100.00,56.00 113.00,56.00 88.00,124.00 68.00,124.00" fill="currentColor"/>
+    <path d="M74 110 H126" stroke="currentColor" stroke-width="5" stroke-linecap="butt"/>
+  </g>
+
+  <g>
+    <polygon points="87.00,144.00 100.00,134.00 113.00,144.00 100.00,154.00" fill="currentColor"/>
+    <path d="M87.0 158.0 L100.0 166.0 L113.0 158.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M87.0 168.0 L100.0 176.0 L113.0 168.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+</g></g>
+<text x="561" y="290" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6E6C68">32 px</text>
+<g color="#111111"><g transform="translate(612,198) scale(0.08)">
+  
+  
+
+  <!-- network first: the lines pass behind the letter, as in the original -->
+  <g fill="none" stroke="currentColor">
+    <polygon points="100.00,16.00 172.75,58.00 172.75,142.00 100.00,184.00 27.25,142.00 27.25,58.00" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="round"/>
+    <polyline points="27.30,100.00 62.00,80.00 100.00,96.00 140.00,78.00 172.70,100.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62.00 80.00 L56.00 132.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M140.00 78.00 L148.00 120.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="100.00" cy="16.00" r="11.00"/>
+    <circle cx="172.75" cy="58.00" r="8.50"/>
+    <circle cx="172.75" cy="142.00" r="8.50"/>
+    <circle cx="100.00" cy="184.00" r="8.50"/>
+    <circle cx="27.25" cy="142.00" r="8.50"/>
+    <circle cx="27.25" cy="58.00" r="8.50"/>
+    <circle cx="27.30" cy="100.00" r="7.00"/>
+    <circle cx="62.00" cy="80.00" r="7.40"/>
+    <circle cx="140.00" cy="78.00" r="7.40"/>
+    <circle cx="172.70" cy="100.00" r="7.00"/>
+    <circle cx="56.00" cy="132.00" r="6.20"/>
+    <circle cx="148.00" cy="120.00" r="6.20"/>
+  </g>
+
+  <g>
+    <polygon points="100.00,44.00 142.00,130.00 58.00,130.00" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="miter"/>
+    <polygon points="100.00,56.00 113.00,56.00 88.00,124.00 68.00,124.00" fill="currentColor"/>
+    <path d="M74 110 H126" stroke="currentColor" stroke-width="5" stroke-linecap="butt"/>
+  </g>
+
+  <g>
+    <polygon points="87.00,144.00 100.00,134.00 113.00,144.00 100.00,154.00" fill="currentColor"/>
+    <path d="M87.0 158.0 L100.0 166.0 L113.0 158.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M87.0 168.0 L100.0 176.0 L113.0 168.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+</g></g>
+<text x="620" y="290" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6E6C68">16 px</text>
+<rect x="690" y="125" width="370" height="175" rx="10" fill="#141311"/>
+<g color="#E8DCD6"><g transform="translate(715,143) scale(0.62)">
+  
+  
+
+  <!-- network first: the lines pass behind the letter, as in the original -->
+  <g fill="none" stroke="currentColor">
+    <polygon points="100.00,16.00 172.75,58.00 172.75,142.00 100.00,184.00 27.25,142.00 27.25,58.00" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="round"/>
+    <polyline points="27.30,100.00 62.00,80.00 100.00,96.00 140.00,78.00 172.70,100.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62.00 80.00 L56.00 132.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M140.00 78.00 L148.00 120.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="100.00" cy="16.00" r="11.00"/>
+    <circle cx="172.75" cy="58.00" r="8.50"/>
+    <circle cx="172.75" cy="142.00" r="8.50"/>
+    <circle cx="100.00" cy="184.00" r="8.50"/>
+    <circle cx="27.25" cy="142.00" r="8.50"/>
+    <circle cx="27.25" cy="58.00" r="8.50"/>
+    <circle cx="27.30" cy="100.00" r="7.00"/>
+    <circle cx="62.00" cy="80.00" r="7.40"/>
+    <circle cx="140.00" cy="78.00" r="7.40"/>
+    <circle cx="172.70" cy="100.00" r="7.00"/>
+    <circle cx="56.00" cy="132.00" r="6.20"/>
+    <circle cx="148.00" cy="120.00" r="6.20"/>
+  </g>
+
+  <g>
+    <polygon points="100.00,44.00 142.00,130.00 58.00,130.00" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="miter"/>
+    <polygon points="100.00,56.00 113.00,56.00 88.00,124.00 68.00,124.00" fill="currentColor"/>
+    <path d="M74 110 H126" stroke="currentColor" stroke-width="5" stroke-linecap="butt"/>
+  </g>
+
+  <g>
+    <polygon points="87.00,144.00 100.00,134.00 113.00,144.00 100.00,154.00" fill="currentColor"/>
+    <path d="M87.0 158.0 L100.0 166.0 L113.0 158.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M87.0 168.0 L100.0 176.0 L113.0 168.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+</g></g>
+<text x="1040" y="288" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#8C8E93">on dark, by inheritance</text>
+<path d="M40 335 H1060" stroke="#E4E3DF" stroke-width="1"/>
+<g color="#5B2422"><g transform="translate(55,372) scale(0.44)">
+  
+  
+
+  <!-- network first: the lines pass behind the letter, as in the original -->
+  <g fill="none" stroke="currentColor">
+    <polygon points="100.00,16.00 172.75,58.00 172.75,142.00 100.00,184.00 27.25,142.00 27.25,58.00" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="round"/>
+    <polyline points="27.30,100.00 62.00,80.00 100.00,96.00 140.00,78.00 172.70,100.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62.00 80.00 L56.00 132.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M140.00 78.00 L148.00 120.00" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="100.00" cy="16.00" r="11.00"/>
+    <circle cx="172.75" cy="58.00" r="8.50"/>
+    <circle cx="172.75" cy="142.00" r="8.50"/>
+    <circle cx="100.00" cy="184.00" r="8.50"/>
+    <circle cx="27.25" cy="142.00" r="8.50"/>
+    <circle cx="27.25" cy="58.00" r="8.50"/>
+    <circle cx="27.30" cy="100.00" r="7.00"/>
+    <circle cx="62.00" cy="80.00" r="7.40"/>
+    <circle cx="140.00" cy="78.00" r="7.40"/>
+    <circle cx="172.70" cy="100.00" r="7.00"/>
+    <circle cx="56.00" cy="132.00" r="6.20"/>
+    <circle cx="148.00" cy="120.00" r="6.20"/>
+  </g>
+
+  <g>
+    <polygon points="100.00,44.00 142.00,130.00 58.00,130.00" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="miter"/>
+    <polygon points="100.00,56.00 113.00,56.00 88.00,124.00 68.00,124.00" fill="currentColor"/>
+    <path d="M74 110 H126" stroke="currentColor" stroke-width="5" stroke-linecap="butt"/>
+  </g>
+
+  <g>
+    <polygon points="87.00,144.00 100.00,134.00 113.00,144.00 100.00,154.00" fill="currentColor"/>
+    <path d="M87.0 158.0 L100.0 166.0 L113.0 158.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M87.0 168.0 L100.0 176.0 L113.0 168.0" fill="none" stroke="currentColor" stroke-width="6.0" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+</g></g>
+<path d="M180 380 V460" stroke="#111111" stroke-width="1" opacity=".3"/>
+<text x="210" y="444" font-family="Georgia, serif" font-size="54" fill="#111111">AnalyzeIt<tspan fill="#9F2F2D">.</tspan></text>
+</svg>

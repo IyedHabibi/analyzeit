@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><title>Bench — all tests</title>
+<body style="font:14px ui-monospace,monospace;padding:24px;background:#0d1015;color:#e8eaee;margin:0">
+<h1 style="font:700 20px system-ui;margin:0 0 4px">Bench test suites</h1>
+<p style="color:#8b939e;margin:0 0 18px">Engine, content and rendered-app. Open individually for detail.</p>
+<pre id="sum" style="font-size:15px;line-height:1.8">running…</pre>
+<div style="position:absolute;left:-9999px">
+  <iframe id="f1" src="run.html"></iframe>
+  <iframe id="f2" src="content.html"></iframe>
+  <iframe id="f3" src="app.html" style="width:1300px;height:900px"></iframe>
+</div>
+<script>
+const SUITES = [
+  ['git engine',   'f1', w => w.runTests && w.runTests()],
+  ['git content',  'f2', w => w.runContentTests && w.runContentTests()],
+  ['rendered app', 'f3', w => w.__app],
+];
+setTimeout(() => {
+  let total = 0, passed = 0;
+  const lines = SUITES.map(([name, id, get]) => {
+    let r; try { r = get(document.getElementById(id).contentWindow); } catch(e){ r = null; }
+    if(!r) return `  ??  ${name.padEnd(16)} could not read results`;
+    total += r.total; passed += r.passed;
+    const mark = r.failed.length ? 'FAIL' : ' ok ';
+    return `  ${mark}  ${name.padEnd(16)} ${r.passed}/${r.total}` +
+      (r.failed.length ? '\n' + r.failed.map(f => `        - ${f.name}: ${f.err}`).join('\n') : '');
+  });
+  document.getElementById('sum').textContent =
+    lines.join('\n') + `\n\n  ${passed}/${total} total` + (passed === total ? '  — all green' : '  — FAILURES');
+}, 7000);
+</script>

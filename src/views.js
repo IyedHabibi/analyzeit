@@ -224,7 +224,9 @@ function onSolved(detail){
     const just=deck.querySelector('[data-ex="'+i+'"]'); popTick(just);
   }
   const db=document.getElementById('donebtn');
-  if(db){ db.textContent='Mark not done'; db.className='btn sec pressable'; }
+  if(db){ db.textContent = T(state.track).auto ? 'Unmark' : 'Mark not done';
+          db.className = T(state.track).auto ? 'btn qui pressable' : 'btn sec pressable'; }
+  if(typeof paintSolved === 'function') paintSolved();
 }
 
 /* ---------- practice ---------- */
@@ -279,7 +281,7 @@ function renderProgress(){
       ${(()=>{const m=TRACKS.filter(t=>!t.auto); if(!m.length) return '';
         const names=m.length===1?m[0].name:m.slice(0,-1).map(t=>t.name).join(', ')+' and '+m[m.length-1].name;
         return `<li><b>${names}</b> — no browser runtime exists for ${m.length===1?'it':'these'} here, so you compare against a worked solution yourself.</li>`;})()}</ul>
-      <p class="t-foot" style="color:var(--label-3)">Progress is stored in this browser. Sign in and it also syncs to your account — nothing else is collected, and there is no tracking or analytics.</p>
+      <p class="t-foot" style="color:var(--label-3)">Progress is stored in this browser and synced to your account. Nothing else is collected, and there is no tracking or analytics.</p>
     </div></div>`;
   /* count up — springs the number, not just the bar */
   deck.querySelectorAll('.stat b').forEach(el=>{
@@ -312,7 +314,11 @@ function render(){
   }
   deckX.set(0);
 }
-document.getElementById('nav').addEventListener('click',e=>{
+/* Delegated from <header>, not from #nav: the wordmark is now the way
+   back to the home page and it lives outside the segmented control.
+   Binding to #nav left it inert -- a link-shaped thing that did nothing,
+   which is worse than not offering it. */
+document.querySelector('header').addEventListener('click',e=>{
   const b=e.target.closest('[data-view]'); if(!b) return;
   state.view=b.dataset.view; render();
 });
@@ -320,6 +326,15 @@ document.body.addEventListener('click',e=>{
   const g=e.target.closest('[data-go]');
   if(g){ const [t,l]=g.dataset.go.split(':');
     if(isMobile()&&sheetOpen) openSheet(false);
+    /* An account is required to start. `hasStoredSession()` is the escape
+       hatch that matters: syncBoot() is asynchronous, so a returning user
+       who clicks within the first second is signed in without `sbUser`
+       being populated yet. Gating on sbUser alone would show them a
+       sign-in wall they had already passed. */
+    if(!sbUser && !hasStoredSession()){
+      openAuth({ go:[t, +l], title:'Sign in to start' });
+      return;
+    }
     goto(t,+l); return; }
   const tg=e.target.closest('[data-toggle]');
   if(tg){ const id=tg.dataset.toggle;
@@ -429,7 +444,7 @@ function renderHome(){
       <span>Kaggle needs a login and blocks browser requests, so the tables are embedded. Links to the real datasets sit in the sidebar of every lesson.</span></div></div>
   </div>
 
-  <p class="t-foot" style="color:var(--label-3);margin:30px 0 0;max-width:62ch">Progress is saved in this browser. An account is optional — sign in and it also syncs across your devices; stay signed out and nothing leaves this browser. Either way there is no tracking and no analytics.</p>`;
+  <p class="t-foot" style="color:var(--label-3);margin:30px 0 0;max-width:62ch">Progress is saved in this browser and synced to your account, so it follows you between devices. Nothing else is collected: no tracking, no analytics, nothing sold.</p>`;
 
   runHeroDemo();
   deck.querySelectorAll('.roll').forEach(el=>{

@@ -155,7 +155,7 @@ wtest('the wordmark reveals per letter and still reads as one word', () => {
     'wordmark has no aria-label; split letters would be read one by one');
 
   const letters = [...mark.querySelectorAll(':scope > .ltr')];
-  const expectLetters = G('BRAND').length + 1;
+  const expectLetters = G('BRAND').length;   /* the full stop was removed */
   aassert(letters.length === expectLetters, `${letters.length} letters, expected ${expectLetters} (${G('BRAND')}.)`);
   letters.forEach((l, i) => {
     aassert(l.getAttribute('aria-hidden') === 'true', `letter ${i} is not hidden from AT`);
@@ -241,7 +241,7 @@ wtest('the footer wordmark fits without clipping a character', () => {
      own box and not wider than the footer that holds it. */
   const wm = D.querySelector('#sdeck .vwm');
   aassert(wm, 'no footer wordmark');
-  aassert(wm.textContent.trim() === G('BRAND') + '.', 'wordmark reads ' + JSON.stringify(wm.textContent.trim()));
+  aassert(wm.textContent.trim() === G('BRAND'), 'wordmark reads ' + JSON.stringify(wm.textContent.trim()));
   aassert(wm.scrollWidth <= wm.clientWidth + 1,
     `wordmark overflows its box: scrollWidth ${wm.scrollWidth} > clientWidth ${wm.clientWidth}`);
   const foot = wm.closest('.vfoot');
@@ -267,6 +267,25 @@ wtest('the home page ends with an aligned track chooser', () => {
   const glows = cards.map(c => c.dataset.glow);
   aassert(new Set(glows).size === glows.length, 'tracks share a glow colour: ' + glows.join(' | '));
   glows.forEach(g => aassert(/^\d+, \d+, \d+$/.test(g), 'glow is not an rgb triplet: ' + g));
+});
+
+wtest('starting a lesson asks for an account first', () => {
+  /* The gate is the product decision this build turns on: no lesson
+     without a sign-in. Asserted from the home page, because that is the
+     only place a person meets it. */
+  const start = D.querySelector('#lnav .lpill, .vcta [data-go]');
+  aassert(start, 'no Start control on the home page');
+  start.click();
+  const dlg = D.getElementById('authwrap');
+  aassert(dlg && !dlg.hidden, 'Start did not ask for an account');
+  aassert(D.querySelector('[data-step="email"]') &&
+          !D.querySelector('[data-step="email"]').hidden,
+    'the sign-in dialog did not open on the email step');
+  aassert(!D.getElementById('authPass'),
+    'a password field is present; sign-in should be a one-time code only');
+  aassert(D.querySelectorAll('.otpbox').length === 6,
+    'expected six code boxes');
+  if(typeof W.closeAuth === 'function') W.closeAuth();
 });
 
 atest('after entering the app, header and deck are actually visible', () => {
@@ -427,13 +446,22 @@ atest('hint and solution are quieter than the primary action', () => {
   W.goto('git', 0);
   const hint = D.getElementById('hintbtn');
   const sol  = D.getElementById('solbtn');
-  const done = D.getElementById('donebtn');
-  aassert(hint && sol && done, 'exercise action buttons missing');
+  aassert(hint && sol, 'hint/solution buttons missing');
+
+  /* On an auto-checked track the primary action is Check answer, not a
+     self-marking button: #donebtn is absent until the exercise is solved,
+     and then it is a quiet Unmark. This used to compare against #donebtn
+     unconditionally, which asserted the old self-marking model rather
+     than the one that ships. */
+  const primary = D.getElementById('checkbtn') || D.getElementById('donebtn');
+  aassert(primary, 'no primary action found on an auto-checked track');
+  aassert(!D.getElementById('donebtn'),
+    'an unsolved auto-checked exercise should not offer a self-mark button');
 
   const hh = parseFloat(W.getComputedStyle(hint).height);
-  const dh = parseFloat(W.getComputedStyle(done).height);
+  const ph = parseFloat(W.getComputedStyle(primary).height);
   aassert(hh <= 30, `hint button is ${hh}px tall; should be small`);
-  aassert(hh < dh, `hint (${hh}px) should not be as tall as the primary action (${dh}px)`);
+  aassert(hh <= ph, `hint (${hh}px) should not outweigh the primary action (${ph}px)`);
 
   /* Outlined, not filled -- a filled button reads as "press me". */
   const hb = W.getComputedStyle(hint).backgroundColor;
@@ -441,6 +469,14 @@ atest('hint and solution are quieter than the primary action', () => {
     'hint button should not be filled, got ' + hb);
   aassert(parseFloat(W.getComputedStyle(sol).fontSize) <= 13,
     'solution button text is too large');
+
+  /* LAST, deliberately: goto() re-renders the lesson, which detaches every
+     element captured above. Reading a computed style from a detached node
+     returns empty strings, not an error -- so doing this earlier fails the
+     assertions above for a reason that has nothing to do with them. */
+  W.goto('r', 0);
+  aassert(D.getElementById('donebtn'),
+    'a written-answer track must keep its Mark solved button');
 });
 
 atest('every interface count is derived, and they agree with each other', () => {
@@ -541,7 +577,20 @@ async function runAppTests(win, settleMs){
      state never occurs in real use, and asserting against it reports a
      working app as blank. */
   const start = D.querySelector('header [data-go]') || D.querySelector('[data-go]');
-  if(start) start.click(); else W.goto('sql', 0);
+  /* Starting a lesson now requires an account, so the click opens the
+     sign-in dialog instead of the app. That gate is asserted in its own
+     welcome-phase test above; here we need to be INSIDE the app, so we
+     go through goto() -- which is exactly what the click handler calls
+     once the gate is satisfied, not a shortcut around it. */
+  if(start) start.click();
+  await wait(120);
+  const gate = W.document.getElementById('authwrap');
+  if(gate && !gate.hidden){
+    if(typeof W.closeAuth === 'function') W.closeAuth();
+    W.goto('sql', 0);
+  }else if(!start){
+    W.goto('sql', 0);
+  }
   await wait(settleMs || 700);          /* let the entrance animation finish */
 
   results.push(...AT.filter(t => t.phase === 'app').map(runOne));

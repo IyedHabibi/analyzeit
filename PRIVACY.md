@@ -11,11 +11,12 @@ in your jurisdiction is not something this document can settle.
 
 ## The short version
 
-You can use AnalyzeIt without an account. If you do, **nothing you do here
-leaves your browser** — not your answers, not your progress, not a page view.
+Starting a lesson requires a free account. We store the email address you sign
+in with, an optional display name if you choose to set one, and which exercises
+you have solved. Nothing else.
 
-If you choose to create an account, we store two things: the email address you
-sign in with, and which exercises you have solved. Nothing else.
+There is no password: you sign in with a six-digit code sent to your email, so
+there is nothing to leak and nothing for you to remember.
 
 There is no analytics, no tracking, no advertising, no third-party scripts that
 watch you, and no cookie banner because there is nothing to consent to beyond
@@ -30,23 +31,23 @@ Contact: through the links in the site footer.
 
 ## What is collected, and when
 
-**Without an account — nothing.**
-Your progress is stored in your own browser using `localStorage`. It never
-reaches a server. Clearing your browser data deletes it, and we cannot recover
-it, because we never had it.
+**Before you sign in — nothing.**
+Browsing the home page collects nothing at all: no analytics, no page views, no
+cookies beyond your light/dark preference. The sign-in service is not even
+contacted until you ask to sign in.
 
 **With an account:**
 
 | Data | Why | Where |
 |---|---|---|
 | Email address | To identify your account and let you sign back in | Supabase (auth) |
-| Password (hashed) | Only if you chose email/password sign-in. Stored hashed by Supabase; never in plain text and never visible to us | Supabase (auth) |
-| Google account id and email | Only if you chose Google sign-in | Supabase (auth) |
+| Display name | Only if you set one. Shown to you; not published anywhere | Supabase (account metadata) |
 | Which exercises you solved, and when | So your progress follows you between devices | Supabase (`progress` table) |
 
-That is the complete list. There is no profile, no display name, no avatar, no
-activity log, no IP log kept by us, no "last seen", and no record of wrong
-answers, time spent, or pages visited.
+That is the complete list. There is no avatar, no activity log, no IP log kept
+by us, no "last seen", and no record of wrong answers, time spent, or pages
+visited. The display name is optional, is shown only back to you, and is not
+published anywhere.
 
 ## What is not collected
 
@@ -70,17 +71,14 @@ analytics cookies are set, which is why there is no consent banner.
 
 - **Contract** — storing your email and progress is necessary to provide the
   account you asked for.
-- **Consent** — creating an account is entirely optional, and withdrawn by
-  deleting your account.
+- **Consent** — you choose whether to create an account at all; withdrawn by
+  deleting it. Browsing the site without one collects nothing.
 
 ## Where your data is held
 
 Account data and progress are stored by **Supabase Inc.**, our hosting
 processor, in their EU (Frankfurt) region. Supabase acts on our instructions
 under a Data Processing Agreement.
-
-If you sign in with Google, Google processes that sign-in under
-[their own privacy policy](https://policies.google.com/privacy).
 
 ## How long it is kept
 
@@ -95,8 +93,8 @@ your data, and complain to your local supervisory authority.
 Two of these are built into the app rather than requiring you to write to
 anyone. Open the account menu in the header:
 
-- **Export my data** downloads everything held about you as a JSON file.
-- **Delete my saved progress** removes every progress row from the server.
+- **Download a copy** gives you everything held about you as a JSON file.
+- **Delete saved progress** removes every progress row from the server.
 
 For full account deletion, including your email address, contact us through the
 footer links. We will action it within 30 days.
@@ -111,8 +109,8 @@ accounts for them.
 Progress rows are protected by PostgreSQL Row Level Security: the database
 itself refuses to return or accept a row belonging to a different account. This
 is enforced by the database, not by the JavaScript in your browser, so it holds
-even if the page code were tampered with. Passwords are hashed by Supabase and
-are never visible to us.
+even if the page code were tampered with. There are no passwords at all: sign-in
+is a one-time six-digit code, so there is no password to steal, reuse or leak.
 
 We cannot promise perfect security — nobody honestly can — but the amount of
 data at risk is deliberately kept as small as the product allows.

@@ -83,7 +83,7 @@ function renderWelcome(){
 
   <nav class="lnav" id="lnav">
     <span class="lmark" aria-hidden="true"></span>
-    <span class="lwm">${BRAND}<i>.</i></span>
+    <span class="lwm">${BRAND}</span>
     <span class="sp"></span>
     <button class="lthm" id="lthemebtn" aria-label="Switch appearance">
       <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.6v10.8a5.4 5.4 0 010-10.8z"/></svg>
@@ -99,15 +99,31 @@ function renderWelcome(){
            assistive tech and the name is restored by aria-label, or it would
            be announced letter by letter. -->
       <h1 class="bigmark rv" data-rv data-delay="0" aria-label="${BRAND}">
-        ${(BRAND + '.').split('').map((c, i) =>
-          `<span class="ltr${c === '.' ? ' dot' : ''}" aria-hidden="true" style="--i:${i}"><span>${c}</span></span>`
+        ${BRAND.split('').map((c, i) =>
+          `<span class="ltr" aria-hidden="true" style="--i:${i}"><span>${c}</span></span>`
         ).join('')}
       </h1>
 
       <p class="vstate rv" data-rv data-delay="1240">Learn ${list} by <em>writing</em> them — not by watching someone else.</p>
 
       <p class="vlede rv" data-rv data-delay="1540">Built for students, career-switchers, and anyone curious enough to open the door.
-        No degree, no setup, no credit card. The database and the runtimes are already here, in this page.</p>
+        No degree, no setup, no credit card &mdash; just a free account so your progress
+        follows you. The database and the runtimes are already here, in this page.</p>
+
+      <!-- The hero had no call to action at all: ctaTrack was computed and
+           never used, and the .vcta / .btn-hero styles had no markup to
+           attach to. The only way in was the small Start in the nav, which
+           is why the page read as flat. This lands on the first UNSOLVED
+           exercise of the first track, so it is a real destination rather
+           than an anchor.
+           NOTE: no backticks in comments inside this template literal --
+           they close the string. That is exactly how this shipped broken. -->
+      <div class="vcta rv" data-rv data-delay="1780">
+        <button class="btn-hero pressable" data-go="${ctaTrack.id}:${firstUnsolved(ctaTrack.id)}">
+          Start with ${ctaTrack.name}
+        </button>
+        <span class="vcta-note">${TOT} exercises &middot; ${AUTO} auto-checked &middot; free</span>
+      </div>
 
     </div>
 
@@ -128,8 +144,6 @@ function renderWelcome(){
        verdict string the app itself produces. -->
   <section class="vs vs-how">
     <div class="vin wide">
-      <aside class="marg rv" data-rv><b>§ 1</b>What happens when you sit down
-        with an exercise.</aside>
       <p class="lbl rv" data-rv>How it works</p>
       <h2 class="dsp vbig rv" data-rv>Three steps,<br>then you are working.</h2>
 
@@ -212,10 +226,10 @@ function renderWelcome(){
   </section>
 
   <footer class="vfoot">
-    <div class="vwm">${BRAND}<i>.</i></div>
+    <div class="vwm">${BRAND}</div>
     <div class="vfoot-meta">
       ${LES} lessons · ${TOT} exercises · ${AUTO} auto-checked<br>
-      Progress stays in this browser unless you sign in. No tracking, no analytics.
+      Progress syncs to your account. No tracking, no analytics, nothing sold.
     </div>
   </footer>
 

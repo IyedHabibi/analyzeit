@@ -70,6 +70,15 @@ Object.assign(EX, {
  {task:'Create a branch <code>experiment</code> but <b>stay on main</b>, then commit <code>main moves on</code>. The experiment branch must not move.',
   solution:'git branch experiment\ngit commit -m "main moves on"',
   hint:'<code>git branch</code> creates a label without switching to it — that is the difference from <code>checkout -b</code>.', data:'git-repo'},
+ {task:'Create <code>cleanup</code> and switch to it, then make two commits: <code>drop empty rows</code> then <code>fix column names</code>.',
+  solution:'git checkout -b cleanup\ngit commit -m "drop empty rows"\ngit commit -m "fix column names"',
+  hint:'One checkout, then two commits. Both land on cleanup, not on main.', data:'git-repo'},
+ {task:'Make a commit <code>add report</code> on <code>main</code>, then create <code>review</code> from that point and switch to it. Both branches must sit on the same commit.',
+  solution:'git commit -m "add report"\ngit branch review\ngit checkout review',
+  hint:'A new branch starts wherever HEAD is. Create it after the commit and both labels point at the same place.', data:'git-repo'},
+ {task:'Create <code>a</code> and <code>b</code> from <code>main</code> without switching to either, then commit <code>main only</code> on main. Both new branches must stay behind.',
+  solution:'git branch a\ngit branch b\ngit commit -m "main only"',
+  hint:'git branch labels the current commit and leaves you where you are — that is what keeps a and b behind.', data:'git-repo'},
 ],
 
 'git-1':[
@@ -82,6 +91,15 @@ Object.assign(EX, {
  {task:'Same as the fast-forward case — branch <code>release</code>, commit <code>ship it</code>, return to <code>main</code> — but force a merge commit anyway so the history records that a branch existed.',
   solution:'git checkout -b release\ngit commit -m "ship it"\ngit checkout main\ngit merge --no-ff release',
   hint:'There is a flag that refuses to fast-forward.', data:'git-repo'},
+ {task:'Branch to <code>charts</code>, commit <code>add bar chart</code>, then return to <code>main</code> and merge it. main has not moved, so no merge commit should appear.',
+  solution:'git checkout -b charts\ngit commit -m "add bar chart"\ngit checkout main\ngit merge charts',
+  hint:'When main has no commits of its own since the split, git just slides the label forward.', data:'git-repo'},
+ {task:'Two people, two branches. Commit <code>alice work</code> on <code>alice</code>, then <code>bob work</code> on <code>bob</code> branched from main, then merge <b>both</b> into main.',
+  solution:'git checkout -b alice\ngit commit -m "alice work"\ngit checkout main\ngit checkout -b bob\ngit commit -m "bob work"\ngit checkout main\ngit merge alice\ngit merge bob',
+  hint:'The second merge is the interesting one: main has moved by then, so it cannot just slide forward.', data:'git-repo'},
+ {task:'Branch <code>hotfix</code>, commit <code>patch</code>, return to main and merge it keeping a merge commit even though it could fast-forward.',
+  solution:'git checkout -b hotfix\ngit commit -m "patch"\ngit checkout main\ngit merge --no-ff hotfix',
+  hint:'--no-ff forces the merge commit, so the history still shows that a branch existed.', data:'git-repo'},
 ],
 
 'git-2':[
@@ -94,6 +112,15 @@ Object.assign(EX, {
  {task:'Commit <code>work in progress</code> then <code>bad commit</code> on main, then discard only the last one so <code>work in progress</code> is the tip. This is local-only work, so rewriting is fine.',
   solution:'git commit -m "work in progress"\ngit commit -m "bad commit"\ngit reset --hard HEAD~1',
   hint:'Move the branch label back one commit from where HEAD is.', data:'git-repo'},
+ {task:'Commit <code>draft</code> then <code>typo</code> on main, then undo <b>both</b> so main sits back where it started, keeping nothing.',
+  solution:'git commit -m "draft"\ngit commit -m "typo"\ngit reset --hard HEAD~2',
+  hint:'HEAD~2 is two commits back. --hard discards the work as well as moving the label.', data:'git-repo'},
+ {task:'Commit <code>feature a</code> on a branch <code>work</code>, then rebase it onto main after main gains <code>main update</code>. The history must end up linear.',
+  solution:'git checkout -b work\ngit commit -m "feature a"\ngit checkout main\ngit commit -m "main update"\ngit checkout work\ngit rebase main',
+  hint:'Rebase replays your commits on top of the other branch, so no merge commit is created.', data:'git-repo'},
+ {task:'Commit <code>good</code> then <code>bad</code> on main. Undo only <code>bad</code>, but in a way that leaves the original commit visible in the history.',
+  solution:'git commit -m "good"\ngit commit -m "bad"\ngit revert HEAD',
+  hint:'revert adds a new commit that cancels the old one. reset would erase it — unsafe once pushed.', data:'git-repo'},
 ],
 
 });

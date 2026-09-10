@@ -24,6 +24,12 @@
    service-role key must never appear in this file or any file that ships.
    ============================================================ */
 
+/* Set to true once Authentication -> Providers -> Google is enabled in
+   Supabase. Until then the button stays hidden, because
+   signInWithOAuth redirects the page and a disabled provider lands
+   the user on raw JSON instead of an error this code can show. */
+const GOOGLE_READY = false;
+
 const SB_URL = 'https://jrsxhwmlhenupoyjlzeu.supabase.co';
 const SB_KEY = 'sb_publishable_vc61agF-MFY2WGOiZpW_pg_rcU_1Sm8';
 
@@ -152,7 +158,11 @@ async function acctExport(){
   if(error){ authMsg('Could not build the export: ' + error.message, true); return; }
   const blob = new Blob([JSON.stringify({
     exported_at: new Date().toISOString(),
-    account: { id: sbUser.id, email: sbUser.email },
+    account: {
+      id: sbUser.id,
+      email: sbUser.email,
+      display_name: (sbUser.user_metadata && sbUser.user_metadata.display_name) || null
+    },
     solved: data
   }, null, 2)], { type:'application/json' });
   const a = document.createElement('a');
@@ -181,16 +191,73 @@ async function acctSignOut(){
   if(typeof render === 'function') render();
 }
 
+/* Arriving FROM a confirmation email or an OAuth provider. Supabase
+   sends the browser back carrying credentials -- tokens in the fragment
+   for the implicit flow, or ?code= for PKCE -- and the SDK only reads
+   them when the client is constructed.
+
+   This exists because the lazy-load below shipped without it, and broke
+   the single path that matters most: confirm your email, land back on
+   the site, and be silently logged out. There was no stored session yet
+   (you had never signed in on that browser), so the SDK never loaded,
+   so the tokens sitting in the URL were never read. The optimisation
+   was right; the exception to it was missing. */
+function hasAuthCallback(){
+  const h = location.hash || '', q = location.search || '';
+  return /[#&](access_token|refresh_token)=/.test(h)
+      || /[?&](code|error_description|error)=/.test(q)
+      || /[#&](error|error_description)=/.test(h);
+}
+
+/* Tokens must not be left sitting in the address bar: they end up in
+   history, in any link the user copies, and in the referrer. */
+function scrubAuthUrl(){
+  try{
+    if(location.hash || location.search)
+      history.replaceState({}, document.title, location.pathname);
+  }catch(e){}
+}
+
 /* ---------- boot ---------- */
 async function syncBoot(){
-  if(!hasStoredSession()) return;          /* anonymous: no network at all */
+  const callback = hasAuthCallback();
+  if(!hasStoredSession() && !callback) return;   /* anonymous: no network at all */
   try{
     await loadSb();
+
+    /* detectSessionInUrl handles the implicit flow on construction. PKCE
+       returns ?code= instead, and older SDK builds do not exchange it
+       automatically, so do it explicitly when no session turned up. */
+    let { data:{ session } = {} } = await sb.auth.getSession();
+    const code = new URLSearchParams(location.search).get('code');
+    if(!session && code && sb.auth.exchangeCodeForSession){
+      try{
+        const r = await sb.auth.exchangeCodeForSession(code);
+        session = r.data && r.data.session;
+      }catch(e){ console.warn('[sync] code exchange failed:', e.message); }
+    }
+
     const { data } = await sb.auth.getUser();
     if(data && data.user){
       sbUser = data.user;
       await pullMerge();
       paintAccount();
+      if(callback){
+        scrubAuthUrl();
+        if(typeof render === 'function') render();
+      }
+    }else if(callback){
+      /* Landed back from a provider with nothing usable. Say so rather
+         than leaving someone looking at a signed-out page wondering
+         whether the click worked. */
+      const err = new URLSearchParams(location.search).get('error_description')
+               || new URLSearchParams(location.hash.replace(/^#/, '')).get('error_description');
+      scrubAuthUrl();
+      if(typeof openAuth === 'function'){
+        openAuth();
+        if(typeof authMsg === 'function')
+          authMsg(err || 'That link did not sign you in. Try signing in below.', true);
+      }
     }
   }catch(e){
     console.warn('[sync] offline or blocked; staying local:', e.message);

@@ -661,6 +661,92 @@ account to make."*
 4. **Authentication -> Email** -> confirm "Confirm email" is ON, or sign-ups
    skip verification.
 
+## Sign-in is required, and it is a one-time code
+
+Starting a lesson opens the account dialog. There are **no passwords anywhere**:
+`signInWithOtp` creates the account if the address is new and signs in if it is
+not, so one flow covers both and there is nothing to leak or forget.
+
+The code **verifies on the sixth digit** -- no submit button. Paste fills all six
+boxes at once (without that, a pasted code drops five digits into a
+`maxlength=1` field); backspace walks back; a wrong code clears the row and
+refocuses; resend runs on a 60s timer because Supabase rate-limits it.
+
+**The gate checks `hasStoredSession()`, not just `sbUser`.** `syncBoot()` is
+asynchronous, so a returning user who clicks within the first second is signed
+in without `sbUser` being populated yet. Gating on `sbUser` alone shows them a
+wall they had already passed.
+
+### It needs custom SMTP to send codes at all
+
+Supabase's built-in email service **cannot have its templates edited**, and its
+default message contains a link, not a `{{ .Token }}` code. It is also
+rate-limited to a handful of messages an hour and is explicitly not for
+production -- a few signups in quick succession and sign-in breaks for everyone.
+
+So: Resend (or any SMTP) -> Supabase **Authentication -> Emails -> SMTP
+Settings** -> then the template unlocks and `{{ .Token }}` can go in the body.
+The dialog says "if the email contains a link instead of a code, clicking it
+signs you in too", so it stays honest in either configuration.
+
+`{{ .Token }}` is the six digits. `{{ .TokenHash }}` is **not** interchangeable
+with it -- swap them and users get an unreadable string with no error anywhere.
+
+### The confirmation-link bug worth not repeating
+
+The lazy-load in `syncBoot()` returned early when no session was stored, which
+is right for an anonymous visitor and **wrong for someone arriving from a
+confirmation email**: they have no stored session yet but do have credentials in
+the URL. The SDK never loaded, the tokens were never read, and they landed
+logged out -- having already spent their single-use token. `hasAuthCallback()`
+is the exception that was missing. Tokens are also scrubbed from the address bar
+afterwards, so they do not sit in history or in any copied link.
+
+## Interface changes
+
+- **The wordmark has no full stop** and is the way back to the home page; the
+  `Home` tab is gone. The click handler is delegated from `<header>`, not
+  `#nav` -- the brandmark lives outside `#nav`, so binding there left it inert.
+- **A solved exercise looks solved**: the editor gets a green edge and a Solved
+  badge. The old button said "Mark not done" once solved, which reads exactly
+  like an exercise that was never finished. On auto-checked tracks it is gone
+  entirely -- you earn it from the checker. **R keeps its Mark solved button**,
+  because with no runtime, self-marking is the only mechanism there is.
+- **The hero has a call to action.** It did not before: `ctaTrack` was computed
+  and never used, and the `.vcta` / `.btn-hero` styles had no markup to attach
+  to. The only way in was the small nav Start, which is why the page read flat.
+- **Phone spacing.** The hero carried 9rem/7rem padding written for desktop --
+  a third of an 812px screen spent on air before the first word.
+- **Display name**, stored in the auth user's metadata rather than a profiles
+  table: a second table would need its own RLS, its own privacy-policy row, its
+  own export line and its own delete path, for one string.
+- **Export and delete are fine print**, not buttons. They are GDPR Articles 15,
+  20 and 17 -- obligations, not features. Almost nobody clicks them; removing
+  them would not remove the obligation, only make it manual.
+
+**Do not put a backtick in a comment inside a JS template literal.** An HTML
+comment reading `` `ctaTrack` `` inside `host.innerHTML = \`...\`` closed the
+string and the entire app failed to boot.
+
+## The bank: 84 exercises
+
+SQL 24, Python 24, Git 18, R 18. 66 auto-checked.
+
+- SQL and Python: `python tools/verify.py`, against real SQLite and real pandas.
+- Git: `tests/content.html`, which runs each solution and asserts it produces
+  the shape its **task** claims.
+- R: written answers, by design.
+
+**Prefer Series and scalar outputs to DataFrame reprs** in Python exercises. Two
+drafted exercises printed DataFrames, whose column alignment can shift between
+pandas versions -- and Pyodide's pandas is not the one `verify.py` runs. A
+version bump would silently start failing correct answers.
+
+**The three-per-lesson assumption has now been removed three times**: from
+`EX_TOTAL()`/`AUTO_CHECKED()`, from `tests/app.test.js`, and from
+`tests/content.test.js`. Each time, growing the bank failed the suite while
+nothing was actually wrong. If a fourth appears, it is the same bug.
+
 ## Known issues and next steps
 
 **Fixed in a later pass**

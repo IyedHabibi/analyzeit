@@ -158,7 +158,12 @@ ctest('the git track is registered and enabled', () => {
   cassert(TRACKS.some(t => t.id === 'git'), 'git not in the derived TRACKS list');
   ['git-0','git-1','git-2'].forEach(k => {
     cassert(LESSONS[k], 'missing lesson ' + k);
-    cassert(EX[k] && EX[k].length === 3, 'expected 3 exercises for ' + k);
+    /* Not `=== 3`. That is the third hardcoded three-per-lesson
+       assumption this project has had to remove: growing the bank
+       failed the suite while nothing was actually wrong. What matters
+       is that the lesson HAS exercises -- every one of them is run and
+       shape-checked by the tests below. */
+    cassert(EX[k] && EX[k].length > 0, 'no exercises for ' + k);
   });
 });
 

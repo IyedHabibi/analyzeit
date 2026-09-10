@@ -2402,6 +2402,102 @@ html[data-theme="dark"] .authbtn.primary{color:#0B0E12}
 .authfine{margin:16px 0 0;font-size:11.5px;line-height:1.5;color:var(--ink-4)}
 @media (max-width:460px){ .authbox{padding:26px 20px 22px} }
 
+
+/* ---- 22. phone-sized home ----
+   The hero carried 9rem/7rem padding, written for a desktop viewport. On
+   a 812px phone that is a third of the screen spent on air before the
+   first word, and the same again after the last -- which is what made
+   the page read as empty rather than spacious. Macro whitespace is a
+   desktop luxury; on a phone it is just scrolling. */
+@media (max-width:640px){
+  .vs{padding:4.5rem 1.5rem}
+  .vs-hero{padding:3.5rem 1.5rem 3rem;min-height:auto}
+  .bigmark{font-size:clamp(52px,15vw,86px)}
+  .vstate{font-size:17px}
+  .vlede{font-size:14px}
+}
+
+/* the call to action, now that something renders it */
+.vcta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:36px}
+.vcta-note{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:11px;letter-spacing:.06em;color:var(--ink-mute)}
+@media (max-width:640px){
+  .vcta{margin-top:28px;gap:12px}
+  .btn-hero{height:48px;padding:0 24px;font-size:15px}
+}
+
+/* ---- 23. a solved exercise looks solved ----
+   Completion used to live only in a button that then read "Mark not
+   done" -- which is the opposite sentence to the one the moment
+   deserves, and looks like an exercise that was never finished. The
+   editor itself now carries the state: a green edge and a Solved badge,
+   which cannot be misread and cannot be toggled by accident.
+
+   The manual button survives ONLY for tracks with no runtime (R), where
+   self-marking is the only mechanism there is. On auto-checked tracks
+   you earn it from the checker, and undoing is a quiet secondary. */
+.pane.solved{border-color:color-mix(in oklab, var(--ok) 55%, var(--rule));
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--ok) 16%, transparent)}
+.pane.solved .pane-bar{background:var(--ok-w);color:var(--ok);
+  border-bottom-color:color-mix(in oklab, var(--ok) 30%, var(--rule))}
+.pane.solved .pane-bar::before{background:var(--ok);opacity:1}
+.solvedbadge{display:inline-flex;align-items:center;gap:6px;
+  font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ok);font-weight:500}
+.solvedbadge svg{width:12px;height:12px}
+@media (prefers-reduced-transparency:reduce){
+  .pane.solved{box-shadow:none}
+}
+@media (prefers-contrast:more){
+  .pane.solved{border-color:var(--ok);border-width:2px}
+}
+
+
+/* ---- 24. the wordmark goes home ----
+   The Home tab was removed: a brandmark that returns you to the start is
+   the convention everywhere, and keeping both spent a nav slot saying the
+   same thing twice. It is a <button> now, so it needs the reset the other
+   header buttons get, plus a hover that says it is pressable at all. */
+.brandmark{border:0;background:none;padding:4px 6px;margin-left:-6px;
+  border-radius:var(--rx);cursor:pointer;text-align:left}
+@media (hover:hover) and (pointer:fine){
+  .brandmark:hover{background:var(--frame-2)}
+}
+.brandmark:focus-visible{outline:2.5px solid var(--tk);outline-offset:2px}
+
+
+/* ---- 25. the six-digit code ----
+   Six boxes rather than one field: it shows the expected length without
+   a word of instruction, and it makes a mistyped digit obvious at a
+   glance. Verification fires on the sixth digit, so there is no submit
+   button -- a button after a complete code exists only to be clicked. */
+.otprow{display:flex;gap:9px;margin:22px 0 4px;justify-content:space-between}
+.otpbox{
+  width:100%;max-width:50px;aspect-ratio:1/1.15;min-width:0;
+  text-align:center;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  font-size:22px;font-weight:500;color:var(--ink);
+  background:var(--paper);border:1px solid var(--rule);border-radius:var(--rx);
+  transition:border-color 120ms ease, box-shadow 120ms ease}
+.otpbox:focus{outline:0;border-color:var(--tk);
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--tk) 22%, transparent)}
+.otpbox.bad{border-color:var(--bad);
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--bad) 20%, transparent)}
+.authswap .sep{color:var(--ink-4);margin:0 8px}
+.authlink[disabled]{color:var(--ink-4);text-decoration:none;cursor:default}
+@media (max-width:420px){
+  .otprow{gap:6px}
+  .otpbox{font-size:19px}
+}
+
+
+/* ---- 26. account panel ---- */
+.authrow{display:flex;gap:8px;align-items:stretch}
+.authrow .authinput{flex:1;min-width:0}
+.authbtn.compact{width:auto;margin-top:0;padding:0 16px;height:40px;flex:none}
+.authfine .authlink{font-size:11.5px}
+.authfine .sep{color:var(--ink-4);margin:0 6px}
+
 </style>
 </head>
 <body>
@@ -2454,13 +2550,13 @@ html[data-theme="dark"] .authbtn.primary{color:#0B0E12}
   <button class="iconbtn menubtn pressable" id="menu" aria-label="Show lessons">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
   </button>
-  <div class="brandmark">
+  <button class="brandmark pressable soft" data-view="home"
+          aria-label="AnalyzeIt — back to the home page">
     <span class="hexmark" aria-hidden="true"></span>
-    <span class="wm">AnalyzeIt<i>.</i></span>
-  </div>
+    <span class="wm">AnalyzeIt</span>
+  </button>
   <nav id="nav" role="tablist"><div class="thumb" id="thumb"></div>
-    <button class="seg pressable soft" data-view="home" aria-current="page">Home</button>
-    <button class="seg pressable soft" data-view="learn">Lessons</button>
+    <button class="seg pressable soft" data-view="learn" aria-current="page">Lessons</button>
     <button class="seg pressable soft" data-view="practice">Practice</button>
     <button class="seg pressable soft" data-view="progress">Progress</button>
   </nav>

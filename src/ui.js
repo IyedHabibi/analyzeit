@@ -224,23 +224,55 @@ function lessonHTML(){
       <div style="margin-top:14px;display:flex;gap:9px;flex-wrap:wrap">
         <button class="btn sec pressable" id="hintbtn">Hint</button>
         <button class="btn sec pressable" id="solbtn">Solution</button>
-        <button class="btn ${exDone(state.track,state.level,curEx())?'sec':'pri'} pressable" id="donebtn">
-          ${exDone(state.track,state.level,curEx())?'Mark not done':'Mark solved'}</button>
+        ${(() => {
+          const done = exDone(state.track,state.level,curEx());
+          /* No runtime means self-marking is the only mechanism, so the
+             button stays a real action there. Everywhere else it is
+             earned from the checker, and undoing is a quiet secondary. */
+          if(!T(state.track).auto)
+            return `<button class="btn ${done?'sec':'pri'} pressable" id="donebtn">${
+              done?'Mark not done':'Mark solved'}</button>`;
+          return done
+            ? `<button class="btn qui pressable" id="donebtn">Unmark</button>`
+            : '';
+        })()}
       </div>
     </div>`;
 }
 function paneLabel(t){return{sql:'query.sql',python:'analysis.py',excel:'formula',r:'script.R',pbi:'notes'}[t];}
 
+/* Called after the workspace is built and again the moment an answer is
+   accepted, so the state is right on load and on solve alike. */
+function paintSolved(){
+  const done = exDone(state.track, state.level, curEx());
+  document.querySelectorAll('#workspace .pane').forEach(p => {
+    p.classList.toggle('solved', done);
+    const bar = p.querySelector('.pane-bar');
+    if(!bar) return;
+    let b = bar.querySelector('.solvedbadge');
+    if(done && !b){
+      b = document.createElement('span');
+      b.className = 'solvedbadge';
+      b.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" '
+        + 'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'
+        + '<path d="M3.5 8.5l3 3 6-7"/></svg>Solved';
+      bar.appendChild(b);
+    }else if(!done && b){ b.remove(); }
+  });
+}
+
 function renderLesson(){
   deck.innerHTML=lessonHTML();
   buildWorkspace();
+  paintSolved();
   const c=document.getElementById('copyex');
   if(c) c.onclick=()=>{const ta=document.getElementById('userin');
     if(ta){ta.value=LESSONS[key(state.track,state.level)].example; ta.focus();}};
   const E=exList(state.track,state.level)[curEx()]||{};
   document.getElementById('hintbtn').onclick=()=>verdict('hint','<b>Hint.</b> '+E.hint);
   document.getElementById('solbtn').onclick=()=>verdict('hint','<b>One correct answer.</b><pre>'+esc(E.solution||'')+'</pre>');
-  document.getElementById('donebtn').onclick=()=>{
+  const _db=document.getElementById('donebtn');
+  if(_db) _db.onclick=()=>{
     const i=curEx(), k=exKey(state.track,state.level,i);
     if(state.done[k]) delete state.done[k]; else state.done[k]=Date.now();
     syncLesson(state.track,state.level);

@@ -14,3 +14,8 @@ __pycache__/
 Thumbs.db
 assets/logo-mark-256.png
 assets/logo-mark-256-light.png
+
+# Deploy artefacts. Both are generated from dist/ by the build; committing
+# them means the same bytes live in the repo twice and drift apart.
+analyzeit-deploy.zip
+deploy/

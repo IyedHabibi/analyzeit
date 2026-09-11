@@ -1,0 +1,45 @@
+# Netlify sends no security headers by default. These are the ones that
+# matter for a page that holds an auth session.
+#
+# Checked against the live site before writing this: only
+# Strict-Transport-Security was present.
+
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Clickjacking. Without frame-ancestors anyone can iframe the site and
+    # overlay it -- a sign-in dialog is exactly what that attack wants.
+    X-Frame-Options = "DENY"
+
+    # Stops the browser second-guessing a declared Content-Type, which is how
+    # an uploaded file ends up executed as script.
+    X-Content-Type-Options = "nosniff"
+
+    # Do not leak the full URL to third parties. The app puts auth tokens in
+    # the fragment on return from a sign-in link; fragments are not sent in
+    # referrers, but a tight policy costs nothing and removes the question.
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Nothing here needs a camera, a microphone or a location.
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+    # HSTS is already sent by Netlify; stated here so it is visible and
+    # survives a host change.
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+    # CSP, reported not enforced, to begin with.
+    #
+    # It is Report-Only deliberately. The app builds lesson content with
+    # innerHTML and runs WebAssembly, and Pyodide fetches its own runtime at
+    # paths this policy has to allow. Shipping an ENFORCED policy untested is
+    # how a site goes blank for every visitor at once. Watch the reports,
+    # tighten, and only then rename this header to Content-Security-Policy.
+    #
+    # 'unsafe-inline' is required because the build inlines all script and
+    # style into one file -- that is the zero-install property, and removing
+    # it would mean giving that up or hashing every block on every build.
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"

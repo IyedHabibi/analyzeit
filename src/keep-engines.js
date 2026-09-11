@@ -254,6 +254,11 @@ function loadPy(onProgress){
     await new Promise((res,rej)=>{
       const s=document.createElement('script');
       s.src='https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js';
+      /* Integrity applies to injected scripts too, but only with
+         crossOrigin set -- without it the browser cannot read the body to
+         hash it, and silently skips the check. */
+      s.integrity='sha384-tVslJOEkg7nVRW3Y3/ReGX0NnonNrbcmt1R5qFbQXQdGa2chRkoJYHAjAsv3zoTq';
+      s.crossOrigin='anonymous';
       s.onload=res; s.onerror=()=>rej(new Error('Could not load Pyodide.'));
       document.head.appendChild(s);
     });

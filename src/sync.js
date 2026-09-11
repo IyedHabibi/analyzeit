@@ -24,18 +24,25 @@
    service-role key must never appear in this file or any file that ships.
    ============================================================ */
 
-/* Set to true once Authentication -> Providers -> Google is enabled in
-   Supabase. Until then the button stays hidden, because
-   signInWithOAuth redirects the page and a disabled provider lands
-   the user on raw JSON instead of an error this code can show. */
-const GOOGLE_READY = false;
+/* Google is enabled in Supabase (Authentication -> Providers), so the
+   button is shown. Set this back to false if the provider is ever turned
+   off: signInWithOAuth redirects the whole page, so a disabled provider
+   cannot surface as an error this code can catch -- it dumps the user on
+   a raw JSON page instead. Absent beats present-and-broken. */
+const GOOGLE_READY = true;
 
 const SB_URL = 'https://jrsxhwmlhenupoyjlzeu.supabase.co';
 const SB_KEY = 'sb_publishable_vc61agF-MFY2WGOiZpW_pg_rcU_1Sm8';
 
-/* Major-pinned rather than exact. Pin the precise version once you have
-   confirmed one, so a bad upstream release cannot reach your users. */
-const SB_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+/* Pinned exactly, and hashed. `@2` resolved to whatever the latest 2.x was
+   at page load, which meant two things: an upstream release could reach
+   users untested, and Subresource Integrity was impossible -- a moving
+   target has no stable hash. Bumping this is now a deliberate act:
+   change the version, recompute the hash, test, ship. */
+const SB_VERSION = '2.116.0';
+const SB_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@'
+             + SB_VERSION + '/dist/umd/supabase.js';
+const SB_SRI = 'sha384-iLddHTLokph6Omwoyid4XKxHaWa6w41BnoEj0q5oOrzmYPpHIKt1wyjReA7s//pP';
 
 let sb = null;                 /* the client, once loaded  */
 let sbUser = null;             /* the signed-in user, or null */
@@ -63,6 +70,8 @@ function loadSb(){
     if(window.supabase && window.supabase.createClient) return resolve(window.supabase);
     const s = document.createElement('script');
     s.src = SB_CDN;
+    s.integrity = SB_SRI;
+    s.crossOrigin = 'anonymous';
     s.onload = () => (window.supabase && window.supabase.createClient)
       ? resolve(window.supabase)
       : reject(new Error('Supabase loaded but exposed no client'));
@@ -244,7 +253,14 @@ async function syncBoot(){
       paintAccount();
       if(callback){
         scrubAuthUrl();
-        if(typeof render === 'function') render();
+        /* Resume the journey the sign-in gate interrupted. */
+        let go = null;
+        try{
+          const raw = sessionStorage.getItem('ai.pendingGo');
+          if(raw){ sessionStorage.removeItem('ai.pendingGo'); go = raw.split(':'); }
+        }catch(e){}
+        if(go && typeof goto === 'function') goto(go[0], +go[1]);
+        else if(typeof render === 'function') render();
       }
     }else if(callback){
       /* Landed back from a provider with nothing usable. Say so rather

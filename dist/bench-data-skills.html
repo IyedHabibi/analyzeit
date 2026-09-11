@@ -2498,6 +2498,13 @@ html[data-theme="dark"] .authbtn.primary{color:#0B0E12}
 .authfine .authlink{font-size:11.5px}
 .authfine .sep{color:var(--ink-4);margin:0 6px}
 
+
+/* ---- 27. policy links ----
+   Quieter than the author links beside them: these are there to be findable,
+   not clicked. */
+.sf-links a[href*="PRIVACY"], .sf-links a[href*="TERMS"]{
+  font-size:12.5px;color:var(--ink-mute, var(--ink-3))}
+
 </style>
 </head>
 <body>
@@ -2591,16 +2598,29 @@ html[data-theme="dark"] .authbtn.primary{color:#0B0E12}
 <footer class="sitefoot">
   <span class="fmark" aria-hidden="true"></span>
   <span class="sf-by"><i>Built by</i> <b>Iyed Habibi</b></span>
-  <nav class="sf-links" aria-label="Author links">
-    <a href="https://github.com/Iyed-Habibi56" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+  <nav class="sf-links" aria-label="Author and policy links">
+    <!-- Both footers carry these. The app footer is the one a signed-in
+         person actually sees, which is exactly who the policy is about. -->
+    <a href="https://github.com/IyedHabibi/analyzeit/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer">Privacy</a>
+    <a href="https://github.com/IyedHabibi/analyzeit/blob/main/TERMS.md" target="_blank" rel="noopener noreferrer">Terms</a>
+    <a href="https://github.com/IyedHabibi" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
     <a href="https://www.linkedin.com/in/iyed-habibi-4bbb4128a/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
   </nav>
 </footer>
 
 <div class="edgehint" id="hintL"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></div>
 <div class="edgehint" id="hintR"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<!-- Subresource Integrity: the browser hashes what the CDN returns and
+     refuses to execute it if the hash differs. Without this, a compromised
+     CDN runs arbitrary code on a page that holds a live auth session.
+     crossorigin="anonymous" is required for SRI to apply at all.
+     NOTE: this covers the entry scripts only. sql.js then fetches
+     sql-wasm.wasm and Pyodide fetches its own runtime and packages; those
+     requests carry no integrity, so the CDN is still trusted for them. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"
+        integrity="sha384-KsfptB549CXfbfsdxZmPo2PlmgCyJ+RNqHTQE1Gj45t3p4DaA1QbZYVyqlni4pOO" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"
+        integrity="sha384-dug+JxfBvklEQdJ4AYuBBAIScUz0bVN73xpy273gcAwHjb3qI0fXmuYNaNfdyYJG" crossorigin="anonymous"></script>
 <script>
 
 /* ============================================================
@@ -3692,6 +3712,11 @@ function loadPy(onProgress){
     await new Promise((res,rej)=>{
       const s=document.createElement('script');
       s.src='https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js';
+      /* Integrity applies to injected scripts too, but only with
+         crossOrigin set -- without it the browser cannot read the body to
+         hash it, and silently skips the check. */
+      s.integrity='sha384-tVslJOEkg7nVRW3Y3/ReGX0NnonNrbcmt1R5qFbQXQdGa2chRkoJYHAjAsv3zoTq';
+      s.crossOrigin='anonymous';
       s.onload=res; s.onerror=()=>rej(new Error('Could not load Pyodide.'));
       document.head.appendChild(s);
     });
@@ -5482,8 +5507,14 @@ function renderWelcome(){
   <footer class="sitefoot">
     <span class="fmark" aria-hidden="true"></span>
     <span class="sf-by"><i>Built by</i> <b>Iyed Habibi</b></span>
-    <nav class="sf-links" aria-label="Author links">
-      <a href="https://github.com/Iyed-Habibi56" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    <nav class="sf-links" aria-label="Author and policy links">
+      <!-- A privacy policy nobody can reach does not discharge the
+           obligation. These point at the repo because the app ships as one
+           HTML file and has no routes of its own; that is a real page a
+           person can read, which is what the requirement actually asks for. -->
+      <a href="https://github.com/IyedHabibi/analyzeit/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer">Privacy</a>
+      <a href="https://github.com/IyedHabibi/analyzeit/blob/main/TERMS.md" target="_blank" rel="noopener noreferrer">Terms</a>
+      <a href="https://github.com/IyedHabibi" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
       <a href="https://www.linkedin.com/in/iyed-habibi-4bbb4128a/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
     </nav>
   </footer>`;
@@ -5711,18 +5742,25 @@ function teardownTicker(){
    service-role key must never appear in this file or any file that ships.
    ============================================================ */
 
-/* Set to true once Authentication -> Providers -> Google is enabled in
-   Supabase. Until then the button stays hidden, because
-   signInWithOAuth redirects the page and a disabled provider lands
-   the user on raw JSON instead of an error this code can show. */
-const GOOGLE_READY = false;
+/* Google is enabled in Supabase (Authentication -> Providers), so the
+   button is shown. Set this back to false if the provider is ever turned
+   off: signInWithOAuth redirects the whole page, so a disabled provider
+   cannot surface as an error this code can catch -- it dumps the user on
+   a raw JSON page instead. Absent beats present-and-broken. */
+const GOOGLE_READY = true;
 
 const SB_URL = 'https://jrsxhwmlhenupoyjlzeu.supabase.co';
 const SB_KEY = 'sb_publishable_vc61agF-MFY2WGOiZpW_pg_rcU_1Sm8';
 
-/* Major-pinned rather than exact. Pin the precise version once you have
-   confirmed one, so a bad upstream release cannot reach your users. */
-const SB_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+/* Pinned exactly, and hashed. `@2` resolved to whatever the latest 2.x was
+   at page load, which meant two things: an upstream release could reach
+   users untested, and Subresource Integrity was impossible -- a moving
+   target has no stable hash. Bumping this is now a deliberate act:
+   change the version, recompute the hash, test, ship. */
+const SB_VERSION = '2.116.0';
+const SB_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@'
+             + SB_VERSION + '/dist/umd/supabase.js';
+const SB_SRI = 'sha384-iLddHTLokph6Omwoyid4XKxHaWa6w41BnoEj0q5oOrzmYPpHIKt1wyjReA7s//pP';
 
 let sb = null;                 /* the client, once loaded  */
 let sbUser = null;             /* the signed-in user, or null */
@@ -5750,6 +5788,8 @@ function loadSb(){
     if(window.supabase && window.supabase.createClient) return resolve(window.supabase);
     const s = document.createElement('script');
     s.src = SB_CDN;
+    s.integrity = SB_SRI;
+    s.crossOrigin = 'anonymous';
     s.onload = () => (window.supabase && window.supabase.createClient)
       ? resolve(window.supabase)
       : reject(new Error('Supabase loaded but exposed no client'));
@@ -5931,7 +5971,14 @@ async function syncBoot(){
       paintAccount();
       if(callback){
         scrubAuthUrl();
-        if(typeof render === 'function') render();
+        /* Resume the journey the sign-in gate interrupted. */
+        let go = null;
+        try{
+          const raw = sessionStorage.getItem('ai.pendingGo');
+          if(raw){ sessionStorage.removeItem('ai.pendingGo'); go = raw.split(':'); }
+        }catch(e){}
+        if(go && typeof goto === 'function') goto(go[0], +go[1]);
+        else if(typeof render === 'function') render();
       }
     }else if(callback){
       /* Landed back from a provider with nothing usable. Say so rather
@@ -5992,8 +6039,24 @@ function buildAuth(){
 
       <div data-step="email">
         <h2 id="authttl">Sign in to start</h2>
-        <p class="authlede">We&rsquo;ll email you a six-digit code. No password to
-          create, and none to forget.</p>
+        <p class="authlede">One click with Google, or we&rsquo;ll email you a
+          six-digit code. No password to create, and none to forget.</p>
+
+        <!-- Shown only when GOOGLE_READY says the provider is actually
+             enabled in Supabase. signInWithOAuth navigates the whole page
+             away, so a disabled provider cannot surface as an error this
+             code could catch -- it lands the user on raw JSON. -->
+        <button class="authbtn google" id="authGoogle" hidden>
+          <svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true">
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.02-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.98 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.02-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.02 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+          </svg>
+          Continue with Google
+        </button>
+        <div class="author" id="authOr" hidden><span>or</span></div>
+
         <label class="authlabel" for="authEmail">Email</label>
         <input class="authinput" id="authEmail" type="email" inputmode="email"
                autocomplete="email" placeholder="you@example.com" spellcheck="false">
@@ -6057,6 +6120,24 @@ function buildAuth(){
 
   authEl.querySelectorAll('[data-close]').forEach(b => b.onclick = closeAuth);
   authEl.addEventListener('keydown', e => { if(e.key === 'Escape') closeAuth(); });
+
+  authEl.querySelector('#authGoogle').onclick = async () => {
+    authMsg('Opening Google\u2026');
+    try{ await loadSb(); }
+    catch(e){
+      authMsg('Could not reach the sign-in service. Check your connection.', true);
+      return;
+    }
+    /* redirectTo must be an origin listed in Supabase's Redirect URLs, or
+       the round trip completes and then dead-ends. Stripping the fragment
+       matters: a stale #access_token in the current URL would otherwise be
+       carried into the redirect target. */
+    const { error } = await sb.auth.signInWithOAuth({
+      provider:'google',
+      options:{ redirectTo: location.origin + location.pathname }
+    });
+    if(error) authMsg(error.message, true);
+  };
 
   const email = authEl.querySelector('#authEmail');
   email.addEventListener('keydown', e => { if(e.key === 'Enter') sendCode(); });
@@ -6262,6 +6343,16 @@ function authMsg(text, bad){
 
 function openAuth(opts){
   buildAuth();
+  /* A Google sign-in navigates away and comes back, so pendingGo cannot
+     survive in memory. Park it where the return trip can find it. */
+  if(opts && opts.go){
+    try{ sessionStorage.setItem('ai.pendingGo', opts.go.join(':')); }catch(e){}
+  }
+  /* Never offer a provider that is switched off -- see GOOGLE_READY. */
+  const gb = authEl.querySelector('#authGoogle'), gor = authEl.querySelector('#authOr');
+  const ready = (typeof GOOGLE_READY !== 'undefined' && GOOGLE_READY);
+  if(gb)  gb.hidden  = !ready;
+  if(gor) gor.hidden = !ready;
   const o = opts || {};
   if(o.go) pendingGo = o.go;
   authEl.querySelector('#authttl').textContent = o.title || 'Sign in to start';

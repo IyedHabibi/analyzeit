@@ -96,8 +96,14 @@ anyone. Open the account menu in the header:
 - **Download a copy** gives you everything held about you as a JSON file.
 - **Delete saved progress** removes every progress row from the server.
 
-For full account deletion, including your email address, contact us through the
-footer links. We will action it within 30 days.
+For full account deletion, including your email address, open an issue at
+[github.com/IyedHabibi/analyzeit/issues](https://github.com/IyedHabibi/analyzeit/issues) or contact the
+author through the links in the site footer. We will action it within 30 days.
+
+*(Self-serve account deletion is not built yet: the browser can delete your
+progress rows but cannot delete the account record itself, which requires a
+privileged key that must never ship in a web page. Until that is done, the
+route above is the one that works.)*
 
 ## Children
 

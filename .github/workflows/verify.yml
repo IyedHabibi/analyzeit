@@ -1,0 +1,43 @@
+# Every exercise ships with a solution. This runs all of them for real -- SQL
+# against SQLite, Python against pandas -- so a broken answer is caught here
+# rather than by somebody stuck on it at 11pm.
+#
+# The browser suites in tests/ are not run here: they need a real browser and
+# the WASM engines, which is a much heavier job. Open tests/index.html for
+# those.
+name: Verify exercise solutions
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pandas
+        run: pip install --quiet pandas
+
+      - name: Build the single-file app
+        run: python tools/build.py
+
+      - name: Run every solution
+        run: python tools/verify.py
+
+      - name: The build must be committed, not just buildable
+        # dist/ is what Netlify serves. If it does not match what src/
+        # produces, the site is running code nobody reviewed.
+        run: |
+          if ! git diff --quiet -- dist/ dev.html; then
+            echo "::error::dist/ is stale -- run tools/build.py and commit the result"
+            git diff --stat -- dist/ dev.html
+            exit 1
+          fi

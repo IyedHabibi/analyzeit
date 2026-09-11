@@ -1,0 +1,41 @@
+# Supabase's free plan pauses a project after seven days with no requests.
+# Nothing is deleted when that happens, but sign-in stops working and nobody
+# is told -- the exercises keep running in the browser, so the site looks
+# healthy while half of it is asleep.
+#
+# One request a day is enough to reset that clock.
+#
+# What this sends: an anonymous read of `progress`, using the publishable
+# key that already ships inside the page. Row Level Security answers that
+# with an empty list, because an unauthenticated caller owns no rows. So
+# this holds no secret, can change nothing, and can read nothing.
+#
+# The two values below are written out rather than stored as repository
+# secrets, for the same reason: both are already public. The project URL is
+# visible in every network request the site makes, and the publishable key is
+# in the shipped HTML. Hiding them here would suggest they are sensitive,
+# which would be the misleading thing to do. The key that IS sensitive --
+# service_role -- appears nowhere in this repository.
+name: Keep the database awake
+
+on:
+  schedule:
+    # 06:00 UTC daily. GitHub runs scheduled jobs late when it is busy and
+    # skips them entirely on repositories with no activity for 60 days --
+    # neither matters here, since the pause needs a full seven idle days.
+    - cron: '0 6 * * *'
+  workflow_dispatch:        # so you can also trigger it by hand
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read one row as an anonymous visitor
+        run: |
+          code=$(curl -s -o /tmp/body -w '%{http_code}' \
+            -H "apikey: sb_publishable_vc61agF-MFY2WGOiZpW_pg_rcU_1Sm8" \
+            "https://jrsxhwmlhenupoyjlzeu.supabase.co/rest/v1/progress?select=user_id&limit=1")
+          echo "HTTP $code -- $(cat /tmp/body)"
+          # A paused project answers 503/540. Fail loudly so the red cross in
+          # the Actions tab is the notification nobody else sends you.
+          test "$code" = "200"

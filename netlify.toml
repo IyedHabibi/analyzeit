@@ -43,3 +43,22 @@
     # style into one file -- that is the zero-install property, and removing
     # it would mean giving that up or hashing every block on every build.
     Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
+
+# Serve the built app AT the root, instead of bouncing the browser to
+# /dist/bench-data-skills.html. That bounce made the ugly path the canonical
+# URL, and it leaked into sign-in: signInWithOAuth sends
+# location.origin + location.pathname as redirect_to, so the value Supabase
+# had to allow was the deep path rather than the site root.
+#
+# force = true is required. Netlify serves a real file in preference to a
+# rule, and index.html exists at the root -- without force, this rule never
+# fires. index.html stays in the repo because it is what makes the folder
+# openable from disk, with no server at all.
+#
+# status 200 is a rewrite, not a redirect: the URL bar keeps saying
+# https://analyzeit.dev/ and no history entry is added.
+[[redirects]]
+  from = "/"
+  to = "/dist/bench-data-skills.html"
+  status = 200
+  force = true

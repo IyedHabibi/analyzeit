@@ -100,10 +100,10 @@ For full account deletion, including your email address, open an issue at
 [github.com/IyedHabibi/analyzeit/issues](https://github.com/IyedHabibi/analyzeit/issues) or contact the
 author through the links in the site footer. We will action it within 30 days.
 
-*(Self-serve account deletion is not built yet: the browser can delete your
-progress rows but cannot delete the account record itself, which requires a
-privileged key that must never ship in a web page. Until that is done, the
-route above is the one that works.)*
+You can also do this yourself at any time: sign in, open your account, and
+choose **delete my account**. That erases your email address and every
+progress row immediately and permanently. There is no recovery and no
+grace period.
 
 ## Children
 

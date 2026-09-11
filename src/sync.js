@@ -192,6 +192,58 @@ async function acctDeleteData(){
   authMsg('Your saved progress has been deleted from the server.');
 }
 
+/* Erasure, GDPR Article 17 -- the whole account, not just its rows.
+   This cannot be done from the browser: deleting a row in auth.users needs
+   the service_role key, which bypasses every access rule and so must never
+   reach a page. The request goes to an Edge Function that holds the key
+   server-side; see supabase/functions/delete-account/index.ts.
+
+   The function takes no user id. It reads the caller's own access token and
+   deletes THAT account, so a tampered request can only ever delete the
+   sender's own data. */
+async function acctDeleteAccount(){
+  if(!sb || !sbUser) return;
+  const typed = prompt('This deletes your ACCOUNT: your email, your progress, '
+    + 'everything, permanently. It cannot be undone.\n\n'
+    + 'Type DELETE to confirm.');
+  if(typed !== 'DELETE') return;
+
+  authMsg('Deleting your account\u2026');
+  let res;
+  try{
+    const { data:{ session } } = await sb.auth.getSession();
+    if(!session){ authMsg('Your session expired. Sign in again and retry.', true); return; }
+    res = await fetch(SB_URL + '/functions/v1/delete-account', {
+      method:'POST',
+      headers:{ 'Authorization':'Bearer ' + session.access_token, 'apikey': SB_KEY }
+    });
+  }catch(e){
+    authMsg('Could not reach the server. Check your connection and retry.', true);
+    return;
+  }
+
+  if(!res.ok){
+    /* 404 means the Edge Function is not deployed. Saying so is better than
+       a generic failure that sends someone hunting through their own
+       browser for a problem that is not there. */
+    let why = res.status === 404
+      ? 'The deletion service is not available. Contact the author through the footer links.'
+      : 'Deletion failed.';
+    try{ const j = await res.json(); if(j && j.error) why = j.error; }catch(e){}
+    authMsg(why, true);
+    return;
+  }
+
+  /* The account is gone server-side. Clear the browser too -- leaving local
+     progress behind would look like the deletion silently failed. */
+  state.done = {};
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  sbUser = null; lastSynced = new Set();
+  try{ await sb.auth.signOut(); }catch(e){}
+  alert('Your account and all of its data have been deleted.');
+  location.reload();
+}
+
 async function acctSignOut(){
   if(!sb) return;
   await sb.auth.signOut();

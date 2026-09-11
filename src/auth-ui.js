@@ -110,6 +110,8 @@ function buildAuth(){
           <button class="authlink" id="authExport">download a copy</button>
           <span class="sep">&middot;</span>
           <button class="authlink" id="authDelete">delete saved progress</button>
+          <span class="sep">&middot;</span>
+          <button class="authlink danger" id="authNuke">delete my account</button>
         </p>
       </div>
 
@@ -145,6 +147,7 @@ function buildAuth(){
   authEl.querySelector('#authBack').onclick = () => { authStep('email'); authMsg(''); };
   authEl.querySelector('#authExport').onclick = () => acctExport();
   authEl.querySelector('#authDelete').onclick = () => acctDeleteData();
+  authEl.querySelector('#authNuke').onclick   = () => acctDeleteAccount();
   authEl.querySelector('#authOut').onclick    = () => acctSignOut();
   authEl.querySelector('#authSaveName').onclick = () => saveName();
   authEl.querySelector('#authName').addEventListener('keydown', e => {

@@ -32,7 +32,7 @@ function buildAuth(){
     <div class="authscrim" data-close></div>
     <div class="authbox" role="dialog" aria-modal="true" aria-labelledby="authttl">
       <button class="authx" data-close aria-label="Close">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+        <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor"
              stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
       </button>
 

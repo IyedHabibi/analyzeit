@@ -7,8 +7,8 @@ const main=document.getElementById('main'), deck=document.getElementById('deck')
       tree=document.getElementById('tree'), rrail=document.getElementById('rrail'),
       side=document.getElementById('side'), scrim=document.getElementById('scrim');
 const T=id=>TRACKS.find(t=>t.id===id);
-const CHECK='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
-const CHEV='<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5L8 6l-3.5 3.5"/></svg>';
+const CHECK='<svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
+const CHEV='<svg aria-hidden="true" focusable="false" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5L8 6l-3.5 3.5"/></svg>';
 wirePress(document.body);
 const GY=id=>'<svg class="gy" viewBox="0 0 24 24" aria-hidden="true"><use href="#gy-'+id+'"/></svg>';
 function paintTrack(id){ document.documentElement.dataset.track=id; }
@@ -253,7 +253,7 @@ function paintSolved(){
     if(done && !b){
       b = document.createElement('span');
       b.className = 'solvedbadge';
-      b.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" '
+      b.innerHTML = '<svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" fill="none" stroke="currentColor" '
         + 'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'
         + '<path d="M3.5 8.5l3 3 6-7"/></svg>Solved';
       bar.appendChild(b);

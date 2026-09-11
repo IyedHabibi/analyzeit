@@ -129,7 +129,7 @@ function renderWelcome(){
 
     <div class="vcue rv" data-rv>
       <span>Scroll</span>
-      <svg width="10" height="30" viewBox="0 0 10 30" fill="none" stroke="currentColor"
+      <svg aria-hidden="true" focusable="false" width="10" height="30" viewBox="0 0 10 30" fill="none" stroke="currentColor"
            stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 1v24m-4-6 4 6 4-6"/></svg>
     </div>
   </section>

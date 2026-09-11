@@ -1801,7 +1801,12 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px
 /* Keystroke micro-UI: a physical key. */
 .us-kbd{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-mute);
   padding:3px 6px;border:1px solid var(--line);border-radius:4px;background:var(--canvas)}
-.us-out th{background:#FBFBFA;color:var(--ink-mute);box-shadow:inset 0 -1px 0 var(--line);
+/* The background here is a fixed light grey, not a themed one: this table is
+   part of a mock screenshot of the app, and a screenshot does not change with
+   the reader's theme. The text colour therefore has to be fixed too. It used
+   to be var(--ink-mute), which flips pale in dark mode against a background
+   that does not flip -- 2.78:1, below the 4.5:1 floor. */
+.us-out th{background:#FBFBFA;color:#5F5A51;box-shadow:inset 0 -1px 0 var(--line);
   font-family:Archivo,"Helvetica Neue",system-ui,sans-serif;font-size:10.5px}
 .us-out td{color:var(--ink-body);box-shadow:inset 0 1px 0 var(--line);
   font-family:"JetBrains Mono",monospace}
@@ -2559,7 +2564,7 @@ html[data-theme="dark"] .authbtn.primary{color:#0B0E12}
 
 <header>
   <button class="iconbtn menubtn pressable" id="menu" aria-label="Show lessons">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+    <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
   </button>
   <button class="brandmark pressable soft" data-view="home"
           aria-label="AnalyzeIt — back to the home page">
@@ -2580,7 +2585,7 @@ html[data-theme="dark"] .authbtn.primary{color:#0B0E12}
     </svg>
   </button>
   <button class="iconbtn pressable" id="theme" aria-label="Switch appearance">
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.6v10.8a5.4 5.4 0 010-10.8z"/></svg>
+    <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.6v10.8a5.4 5.4 0 010-10.8z"/></svg>
   </button>
 </header>
 
@@ -2612,8 +2617,8 @@ html[data-theme="dark"] .authbtn.primary{color:#0B0E12}
   </nav>
 </footer>
 
-<div class="edgehint" id="hintL"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></div>
-<div class="edgehint" id="hintR"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div>
+<div class="edgehint" id="hintL"><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></div>
+<div class="edgehint" id="hintR"><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></div>
 <!-- Subresource Integrity: the browser hashes what the CDN returns and
      refuses to execute it if the hash differs. Without this, a compromised
      CDN runs arbitrary code on a page that holds a live auth session.

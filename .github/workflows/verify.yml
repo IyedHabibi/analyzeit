@@ -36,8 +36,8 @@ jobs:
         # dist/ is what Netlify serves. If it does not match what src/
         # produces, the site is running code nobody reviewed.
         run: |
-          if ! git diff --quiet -- dist/ dev.html; then
-            echo "::error::dist/ is stale -- run tools/build.py and commit the result"
-            git diff --stat -- dist/ dev.html
+          if ! git diff --quiet -- dist/ dev.html privacy/ terms/; then
+            echo "::error::generated files are stale -- run tools/build.py and commit the result"
+            git diff --stat -- dist/ dev.html privacy/ terms/
             exit 1
           fi

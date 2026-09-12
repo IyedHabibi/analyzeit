@@ -172,6 +172,19 @@ def main() -> int:
     print("built {}  {:,} bytes  sha256 {}".format(target, len(out.encode("utf-8")), digest))
     print("built dev.html  (modules loaded separately)")
 
+    # The policy pages are generated from PRIVACY.md and TERMS.md. Building
+    # them here means the published pages cannot drift from the documents in
+    # the repository -- there is no separate command anyone has to remember.
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "build_pages", pathlib.Path(__file__).with_name("build-pages.py"))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        mod.main()
+    except Exception as exc:                       # pragma: no cover
+        print("WARN  policy pages not rebuilt: {}".format(exc))
+
     if "--check" in sys.argv:
         ref = pathlib.Path(sys.argv[sys.argv.index("--check") + 1])
         want = ref.read_text(encoding="utf-8")

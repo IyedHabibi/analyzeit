@@ -5767,8 +5767,19 @@ const SB_KEY = 'sb_publishable_vc61agF-MFY2WGOiZpW_pg_rcU_1Sm8';
    target has no stable hash. Bumping this is now a deliberate act:
    change the version, recompute the hash, test, ship. */
 const SB_VERSION = '2.116.0';
-const SB_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@'
-             + SB_VERSION + '/dist/umd/supabase.js';
+const SB_PATH = '/@supabase/supabase-js@' + SB_VERSION + '/dist/umd/supabase.js';
+/* Two hosts, tried in order. Both serve the same npm tarball, so the bytes
+   are identical and ONE hash covers both -- verified, not assumed. A single
+   CDN is a single point of failure for sign-in, and not a rare one: ad
+   blockers, corporate proxies and some national networks block jsdelivr
+   outright. The page itself still loads from Netlify, so the site looks
+   perfectly healthy while signing in is impossible. That is exactly the
+   failure one user hit. */
+const SB_CDNS = [
+  'https://cdn.jsdelivr.net/npm' + SB_PATH,
+  'https://unpkg.com' + SB_PATH
+];
+const SB_CDN = SB_CDNS[0];
 const SB_SRI = 'sha384-iLddHTLokph6Omwoyid4XKxHaWa6w41BnoEj0q5oOrzmYPpHIKt1wyjReA7s//pP';
 
 let sb = null;                 /* the client, once loaded  */
@@ -5791,24 +5802,49 @@ function hasStoredSession(){
   return false;
 }
 
-function loadSb(){
-  if(sbLoading) return sbLoading;
-  sbLoading = new Promise((resolve, reject) => {
-    if(window.supabase && window.supabase.createClient) return resolve(window.supabase);
+/* One <script> attempt. Resolves with the library, rejects if this host
+   cannot deliver it. Integrity is set on every attempt: a fallback that
+   drops the hash would turn a blocked CDN into a way to inject code. */
+function loadSbFrom(url){
+  return new Promise((resolve, reject) => {
     const s = document.createElement('script');
-    s.src = SB_CDN;
+    s.src = url;
     s.integrity = SB_SRI;
     s.crossOrigin = 'anonymous';
+    s.async = true;
     s.onload = () => (window.supabase && window.supabase.createClient)
       ? resolve(window.supabase)
-      : reject(new Error('Supabase loaded but exposed no client'));
-    s.onerror = () => reject(new Error('Could not reach the sign-in service'));
+      : reject(new Error('loaded but exposed no client'));
+    /* Fires for a network failure, a DNS block, an extension blocking the
+       request, AND for an integrity mismatch. */
+    s.onerror = () => { s.remove(); reject(new Error('could not load from ' + url)); };
     document.head.appendChild(s);
-  }).then(lib => {
+  });
+}
+
+function loadSb(){
+  if(sbLoading) return sbLoading;
+  sbLoading = (async () => {
+    if(window.supabase && window.supabase.createClient) return window.supabase;
+    let last = null;
+    for(const url of SB_CDNS){
+      try{ return await loadSbFrom(url); }
+      catch(e){ last = e; console.warn('[sync]', e.message); }
+    }
+    throw last || new Error('no CDN reachable');
+  })().then(lib => {
     sb = sb || lib.createClient(SB_URL, SB_KEY, {
       auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:true }
     });
     return sb;
+  }).catch(err => {
+    /* Do NOT keep a rejected promise in sbLoading. It was cached like a
+       success, so the first failure was permanent: every later click got
+       the same rejection back without a single new request being made, and
+       the only cure was a page reload. Clearing it makes "try again"
+       actually try again. */
+    sbLoading = null;
+    throw err;
   });
   return sbLoading;
 }
@@ -6188,7 +6224,7 @@ function buildAuth(){
     authMsg('Opening Google\u2026');
     try{ await loadSb(); }
     catch(e){
-      authMsg('Could not reach the sign-in service. Check your connection.', true);
+      authMsg('Sign-in could not load. An ad blocker or your network may be blocking it. Try pausing the blocker, or a different network.', true);
       return;
     }
     /* redirectTo must be an origin listed in Supabase's Redirect URLs, or
@@ -6314,7 +6350,7 @@ async function sendCode(isResend){
   authMsg('Sending…');
   try{ await loadSb(); }
   catch(e){
-    authMsg('Could not reach the sign-in service. Check your connection.', true);
+    authMsg('Sign-in could not load. An ad blocker or your network may be blocking it. Try pausing the blocker, or a different network.', true);
     return;
   }
   const { error } = await sb.auth.signInWithOtp({

@@ -126,7 +126,7 @@ function buildAuth(){
     authMsg('Opening Google\u2026');
     try{ await loadSb(); }
     catch(e){
-      authMsg('Could not reach the sign-in service. Check your connection.', true);
+      authMsg('Sign-in could not load. An ad blocker or your network may be blocking it. Try pausing the blocker, or a different network.', true);
       return;
     }
     /* redirectTo must be an origin listed in Supabase's Redirect URLs, or
@@ -252,7 +252,7 @@ async function sendCode(isResend){
   authMsg('Sending…');
   try{ await loadSb(); }
   catch(e){
-    authMsg('Could not reach the sign-in service. Check your connection.', true);
+    authMsg('Sign-in could not load. An ad blocker or your network may be blocking it. Try pausing the blocker, or a different network.', true);
     return;
   }
   const { error } = await sb.auth.signInWithOtp({

@@ -242,6 +242,25 @@ function tickResend(){
 }
 
 /* ---------- actions ---------- */
+/* Supabase reports mail failures in the server's words, not the reader's.
+   The one that matters most: while the sending domain is unverified, the
+   mail provider accepts mail ONLY to the account owner's own address and
+   rejects every other recipient. Supabase surfaces that as a generic
+   "error sending", which reads like a bug in this site and sent one real
+   user hunting through their own browser for a problem that was never
+   there. Name the wall instead. */
+function sendErrorText(error){
+  const m = (error && error.message) || '';
+  if(/sending|smtp|mail/i.test(m))
+    return 'We could not send the email. This is a problem on our side, not yours — '
+         + 'the site owner needs to finish verifying the sending domain.';
+  if(/rate|too many|limit/i.test(m))
+    return 'Too many codes requested. Wait a minute and try again.';
+  if(/invalid|not allowed|disabled/i.test(m))
+    return 'That address was refused. Try another, or use Continue with Google.';
+  return m || 'Could not send the code.';
+}
+
 async function sendCode(isResend){
   const input = authEl.querySelector('#authEmail');
   const addr  = (isResend ? otpEmail : input.value.trim()).toLowerCase();
@@ -259,7 +278,7 @@ async function sendCode(isResend){
     email: addr,
     options:{ shouldCreateUser: true }
   });
-  if(error){ authMsg(error.message, true); return; }
+  if(error){ authMsg(sendErrorText(error), true); return; }
   otpEmail = addr;
   resendAt = Date.now() + 60000;      /* Supabase rate-limits resends */
   authStep('code');

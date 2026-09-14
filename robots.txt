@@ -1,0 +1,12 @@
+# Everything public may be indexed. The app keeps no private content at a URL:
+# accounts and progress live behind sign-in, not behind a path.
+User-agent: *
+Allow: /
+
+# The built file is the same page as the site root; the root is canonical.
+Disallow: /dist/
+Disallow: /dev.html
+Disallow: /tests/
+Disallow: /archive/
+
+Sitemap: https://analyzeit.dev/sitemap.xml

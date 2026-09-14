@@ -110,6 +110,13 @@ SHELL = '''<!doctype html>
 <title>TITLE_ — AnalyzeIt</title>
 <meta name="description" content="DESC_">
 <link rel="icon" href="/assets/logo-favicon.png">
+<link rel="canonical" href="https://analyzeit.dev/SLUG_/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TITLE_ — AnalyzeIt">
+<meta property="og:description" content="DESC_">
+<meta property="og:url" content="https://analyzeit.dev/SLUG_/">
+<meta property="og:image" content="https://analyzeit.dev/assets/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
     --paper:#FBFAF7; --ink:#23201C; --ink2:#4A453D; --mut:#8A8278;
@@ -194,6 +201,7 @@ def main():
         md = OWNER_NOTE.sub('', md, count=1)
         page = (SHELL
                 .replace('TITLE_', title)
+                .replace('SLUG_', slug)
                 .replace('DESC_', html.escape(desc, quote=True))
                 .replace('BODY_', render(md)))
         d = os.path.join(ROOT, slug)

@@ -251,13 +251,19 @@ function tickResend(){
    there. Name the wall instead. */
 function sendErrorText(error){
   const m = (error && error.message) || '';
-  if(/sending|smtp|mail/i.test(m))
-    return 'We could not send the email. This is a problem on our side, not yours — '
-         + 'the site owner needs to finish verifying the sending domain.';
+  /* Log the server's own words: the friendly text below is for the reader,
+     this is for whoever has to diagnose it. */
+  console.warn('[auth] send failed:', error && (error.code || error.status), m);
+  /* Order matters. Supabase's "Email address ... is invalid" contains
+     "mail", so testing for mail failures first would blame the site for a
+     typo in the address. Specific causes first, the catch-all last. */
+  if(/invalid|not allowed|disabled/i.test(m))
+    return 'That address was refused. Check it for typos, or use Continue with Google.';
   if(/rate|too many|limit/i.test(m))
     return 'Too many codes requested. Wait a minute and try again.';
-  if(/invalid|not allowed|disabled/i.test(m))
-    return 'That address was refused. Try another, or use Continue with Google.';
+  if(/sending|smtp/i.test(m))
+    return 'We could not send the email. This is a problem on our side, not yours. '
+         + 'Please try Continue with Google for now.';
   return m || 'Could not send the code.';
 }
 

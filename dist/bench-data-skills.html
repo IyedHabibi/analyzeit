@@ -6458,9 +6458,15 @@ async function verifyCode(token){
          back. Leaving six wrong digits on screen invites retyping over
          them, which is how people end up with seven. */
       authEl.querySelectorAll('.otpbox').forEach(b => b.classList.add('bad'));
-      authMsg(/expired/i.test(error.message)
-        ? 'That code has expired. Send a new one.'
-        : 'That code is not right. Check the email and try again.', true);
+      /* Supabase answers "Token has expired or is invalid" for EVERY code it
+         rejects -- wrong digits, a code replaced by a newer request, or a
+         code already used because a mail scanner opened the link in the same
+         email. Matching "expired" in that sentence told people a code sent
+         ten seconds earlier had timed out, which is almost never what
+         happened. Name the causes that actually occur. */
+      console.warn('[auth] verify failed:', error.code || error.status, error.message);
+      authMsg('That code did not work. Use the newest email if you asked more than once, '
+            + 'or send a new code.', true);
       setTimeout(() => otpClear(true), 700);
       return;
     }
